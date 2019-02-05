@@ -1,3 +1,6 @@
 # Videoteca Severi
 
-* Lista dei gruppi: [GRUPPI.md](https://github.com/iofurlan/videoteca-severi/blob/doc/doc/GRUPPI.md)
+
+### Documentazione
+* Lista dei gruppi: ["GRUPPI.md"](doc/GRUPPI.md)
+* Unità di Apprendimento: ["UDA_5ID.pdf"](doc/UDA_5ID.pdf)
