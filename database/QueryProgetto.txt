@@ -1,0 +1,26 @@
+QUERY
+
+1-Select nomedvd
+From dvd
+inner join Disponibile on dvd.altrelingue = disponibile.altrelingue
+Where dvd.linguaoriginale = "" OR disponibile.nomelingua
+
+2-Select nomedvd
+From dvd
+Where dvd.noleggiato = "";
+
+3-Select nomedvd
+From dvd
+Where dvd.tipo = "";
+
+4-Select nomedvd
+From dvd 
+Where dvd.genere = "";
+
+5-Select nomedvd
+From dvd
+Where dvd.disponibilità = "SI" AND dvd.temi = "";
+
+6-Select nomedvd
+From dvd
+Where dvd.tipo = "" AND dvd.disponibilità = "SI";
