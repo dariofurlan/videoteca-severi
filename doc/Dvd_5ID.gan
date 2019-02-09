@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2019-02-03" view-index="0" gantt-divider-location="363" resource-divider-location="300" version="2.8.5" locale="it_IT">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2019-01-31" view-index="0" gantt-divider-location="432" resource-divider-location="300" version="2.8.5" locale="it_IT">
     <description/>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Nome" width="203" order="0"/>
+    <view zooming-state="default:3" id="gantt-chart">
+        <field id="tpd3" name="Nome" width="287" order="0"/>
         <field id="tpd4" name="Data d'inizio" width="78" order="1"/>
-        <field id="tpd5" name="Data di fine" width="78" order="2"/>
+        <field id="tpd5" name="Data di fine" width="63" order="2"/>
         <timeline><![CDATA[11]]></timeline>
-        <option id="color.recent"><![CDATA[#ff3333 #f4f4f4 #66ff66 #00ccff]]></option>
+        <option id="color.recent"><![CDATA[#66ff66 #ff3333 #f4f4f4 #00ccff]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Nome" width="210" order="0"/>
@@ -37,6 +37,18 @@
         <date year="2019" month="4" date="5" type="HOLIDAY"><![CDATA[Vacanza il 05/04/19 0.00]]></date>
         <date year="2019" month="4" date="6" type="HOLIDAY"><![CDATA[Vacanza il 06/04/19 0.00]]></date>
         <date year="2019" month="3" date="16" type="HOLIDAY"><![CDATA[Vacanza il 16/03/19 0.00]]></date>
+        <date year="2019" month="2" date="10" type="HOLIDAY"><![CDATA[Vacanza il 10/02/19 0.00]]></date>
+        <date year="2019" month="2" date="17" type="HOLIDAY"><![CDATA[Vacanza il 17/02/19 0.00]]></date>
+        <date year="2019" month="2" date="24" type="HOLIDAY"><![CDATA[Vacanza il 24/02/19 0.00]]></date>
+        <date year="2019" month="3" date="3" type="HOLIDAY"><![CDATA[Vacanza il 03/03/19 0.00]]></date>
+        <date year="2019" month="3" date="10" type="HOLIDAY"><![CDATA[Vacanza il 10/03/19 0.00]]></date>
+        <date year="2019" month="3" date="17" type="HOLIDAY"><![CDATA[Vacanza il 17/03/19 0.00]]></date>
+        <date year="2019" month="3" date="24" type="HOLIDAY"><![CDATA[Vacanza il 24/03/19 0.00]]></date>
+        <date year="2019" month="3" date="31" type="HOLIDAY"><![CDATA[Vacanza il 31/03/19 0.00]]></date>
+        <date year="2019" month="4" date="7" type="HOLIDAY"><![CDATA[Vacanza il 07/04/19 0.00]]></date>
+        <date year="2019" month="4" date="14" type="HOLIDAY"><![CDATA[Vacanza il 14/04/19 0.00]]></date>
+        <date year="2019" month="4" date="28" type="HOLIDAY"><![CDATA[Vacanza il 28/04/19 0.00]]></date>
+        <date year="2019" month="5" date="5" type="HOLIDAY"><![CDATA[Vacanza il 05/05/19 0.00]]></date>
     </calendars>
     <tasks empty-milestones="true">
         <taskproperties>
@@ -51,70 +63,74 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="DOC" color="#ffff00" meeting="false" start="2019-02-02" duration="67" complete="4" expand="true">
-            <task id="11" name="Pianificazione Attività" color="#ffff00" meeting="false" start="2019-02-02" duration="7" complete="59" expand="true">
+        <task id="0" name="DOC" color="#ffff00" meeting="false" start="2019-02-02" duration="57" complete="3" expand="true">
+            <task id="11" name="Pianificazione Attività" color="#ffff00" meeting="false" start="2019-02-02" duration="6" complete="46" expand="true">
                 <depend id="3" type="2" difference="0" hardness="Strong"/>
                 <depend id="5" type="2" difference="0" hardness="Strong"/>
                 <depend id="14" type="2" difference="0" hardness="Strong"/>
                 <depend id="20" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="14" name="Analisi Dei Rischi" color="#ffff00" meeting="false" start="2019-02-09" duration="18" complete="0" expand="true"/>
-            <task id="20" name="Monitoraggio dell'Avanzamento" color="#ffff00" meeting="false" start="2019-02-09" duration="60" complete="0" expand="true"/>
+            <task id="14" name="Analisi Dei Rischi" color="#ffff00" meeting="false" start="2019-02-08" duration="16" complete="0" expand="true"/>
+            <task id="20" name="Monitoraggio dell'Avanzamento" color="#ffff00" meeting="false" start="2019-02-08" duration="51" complete="0" expand="true"/>
         </task>
-        <task id="21" name="LOGIN" color="#99ff66" meeting="false" start="2019-02-10" duration="4" complete="0" expand="true">
-            <task id="158" name="Definire Le Query" color="#66ff66" meeting="false" start="2019-02-10" duration="3" complete="0" expand="true">
+        <task id="21" name="LOGIN" color="#99ff66" meeting="false" start="2019-02-09" duration="22" complete="2" expand="true">
+            <task id="158" name="Definire Le Query" color="#66ff66" meeting="false" start="2019-02-09" duration="1" complete="100" expand="true">
+                <depend id="88" type="2" difference="0" hardness="Strong"/>
+                <depend id="277" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="277" name="Studiare Come Limitare Una Pagina" color="#66ff66" meeting="false" start="2019-02-11" duration="4" complete="0" expand="true">
                 <depend id="1" type="2" difference="0" hardness="Strong"/>
                 <depend id="4" type="2" difference="0" hardness="Strong"/>
-                <depend id="88" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="1" name="Frontend Admin" color="#99ff66" meeting="false" start="2019-02-13" duration="1" complete="0" expand="true"/>
-            <task id="4" name="Backend Admin" color="#99ff66" meeting="false" start="2019-02-13" duration="1" complete="0" expand="true"/>
+            <task id="1" name="Frontend Admin" color="#99ff66" meeting="false" start="2019-02-15" duration="17" complete="0" expand="true"/>
+            <task id="4" name="Backend Admin" color="#99ff66" meeting="false" start="2019-02-15" duration="17" complete="0" expand="true"/>
         </task>
-        <task id="27" name="DATABASE" color="#00ccff" meeting="false" start="2019-02-09" duration="15" complete="8" expand="true">
-            <task id="3" name="Definizione Schema E/R" color="#00ccff" meeting="false" start="2019-02-09" duration="1" complete="100" expand="true">
+        <task id="27" name="DATABASE" color="#00ccff" meeting="false" start="2019-02-08" duration="14" complete="9" expand="true">
+            <task id="3" name="Definizione Schema E/R" color="#00ccff" meeting="false" start="2019-02-08" duration="1" complete="100" expand="true">
                 <depend id="61" type="2" difference="0" hardness="Strong"/>
                 <depend id="150" type="2" difference="0" hardness="Strong"/>
                 <depend id="158" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="88" name="File Create Table" color="#00ccff" meeting="false" start="2019-02-13" duration="2" complete="0" expand="true">
+            <task id="88" name="File Create Table" color="#00ccff" meeting="false" start="2019-02-11" duration="2" complete="11" expand="true">
                 <depend id="57" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="57" name="Scrittura Query Backend" color="#00ccff" meeting="false" start="2019-02-15" duration="2" complete="0" expand="true">
+            <task id="57" name="Scrittura Query Backend" color="#00ccff" meeting="false" start="2019-02-13" duration="2" complete="0" expand="true">
                 <depend id="85" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="85" name="Struttura Query Login" color="#00ccff" meeting="false" start="2019-02-17" duration="3" complete="0" expand="true">
+            <task id="85" name="Struttura Query Login" color="#00ccff" meeting="false" start="2019-02-15" duration="2" complete="0" expand="true">
                 <depend id="59" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="59" name="Insert Dati" color="#00ccff" meeting="false" start="2019-02-20" duration="4" complete="0" expand="true"/>
+            <task id="59" name="Insert Dati" color="#00ccff" meeting="false" start="2019-02-18" duration="6" complete="0" expand="true"/>
         </task>
-        <task id="30" name="BACKEND" color="#cc00cc" meeting="false" start="2019-02-09" duration="7" complete="8" expand="true">
-            <task id="5" name="Stabilire Struttura Richieste" color="#cc00cc" meeting="false" start="2019-02-09" duration="3" complete="25" expand="true"/>
-            <task id="61" name="Stabilire Query da Chiedere" color="#cc00cc" meeting="false" start="2019-02-10" duration="3" complete="0" expand="true">
-                <depend id="63" type="2" difference="0" hardness="Strong"/>
+        <task id="30" name="BACKEND" color="#cc00cc" meeting="false" start="2019-02-08" duration="8" complete="22" expand="true">
+            <task id="61" name="Stabilire Query da Chiedere" color="#cc00cc" meeting="false" start="2019-02-09" duration="1" complete="38" expand="true">
                 <depend id="88" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="63" name="Creare funzione per Formattazione Risposta" color="#cc00cc" meeting="false" start="2019-02-13" duration="1" complete="0" expand="true">
+            <task id="5" name="Stabilire Struttura Richieste" color="#cc00cc" meeting="false" start="2019-02-08" duration="4" complete="40" expand="true">
+                <depend id="63" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="63" name="Creare funzione per Formattazione Risposta" color="#cc00cc" meeting="false" start="2019-02-13" duration="2" complete="0" expand="true">
                 <depend id="64" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="64" name="Creare Funzione che Controlla la Richiesta" color="#cc00cc" meeting="false" start="2019-02-14" duration="1" complete="0" expand="true">
+            <task id="64" name="Creare Funzione che Controlla la Richiesta" color="#cc00cc" meeting="false" start="2019-02-15" duration="1" complete="0" expand="true">
                 <depend id="66" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="66" name="Creare Funzione che Esegue la Richiesta e Crea Risposta" color="#cc00cc" meeting="false" start="2019-02-15" duration="1" complete="0" expand="true"/>
+            <task id="66" name="Creare Funzione che Esegue la Richiesta e Crea Risposta" color="#cc00cc" meeting="false" start="2019-02-16" duration="1" complete="0" expand="true"/>
         </task>
-        <task id="32" name="FRONTEND" color="#ff3333" meeting="false" start="2019-02-10" duration="6" complete="0" expand="true">
-            <task id="150" name="Definire Le Query" color="#ff3333" meeting="false" start="2019-02-10" duration="3" complete="0" expand="true">
+        <task id="32" name="FRONTEND" color="#ff3333" meeting="false" start="2019-02-09" duration="5" complete="7" expand="true">
+            <task id="150" name="Definire Le Query" color="#ff3333" meeting="false" start="2019-02-09" duration="1" complete="44" expand="true">
                 <depend id="88" type="2" difference="0" hardness="Strong"/>
                 <depend id="232" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="232" name="Pagina Di Ricerca" color="#ff3333" meeting="false" start="2019-02-13" duration="1" complete="0" expand="true">
+            <task id="232" name="Pagina Di Ricerca" color="#ff3333" meeting="false" start="2019-02-11" duration="2" complete="0" expand="true">
                 <depend id="235" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="235" name="Filtri Di Ricerca" color="#ff3333" meeting="false" start="2019-02-14" duration="1" complete="0" expand="true">
+            <task id="235" name="Filtri Di Ricerca" color="#ff3333" meeting="false" start="2019-02-13" duration="1" complete="0" expand="true">
                 <depend id="238" type="2" difference="0" hardness="Strong"/>
                 <depend id="241" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="238" name="Home Page" color="#ff3333" meeting="false" start="2019-02-15" duration="1" complete="0" expand="true"/>
-            <task id="241" name="Pagina Scheda Film" color="#ff3333" meeting="false" start="2019-02-15" duration="1" complete="0" expand="true"/>
+            <task id="238" name="Home Page" color="#ff3333" meeting="false" start="2019-02-14" duration="1" complete="0" expand="true"/>
+            <task id="241" name="Pagina Scheda Film" color="#ff3333" meeting="false" start="2019-02-14" duration="1" complete="0" expand="true"/>
         </task>
     </tasks>
     <resources/>
