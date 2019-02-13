@@ -14,34 +14,36 @@
 
   il path da aggiungere all'URL radice come fosse un percorso di cartelle
   per identificare delle risorse
-  es:`http://<i>example.com</i>/user_api.php`**`/risorsa/`**
+  es:`http://example.com/user_api.php`**`/risorsa/`**
 
   * **Risorse**:
     * dvd
     * img
 
 
-*  **Parametri GET**
+* **Parametri GET**
 
   * **img**
 
     `id=[id_immagine]`
 
   * **dvd**<br/>
+    `limit=[unsigned integer]` numero di righe massime visualizzabili
+
     `categoria=[integer]`
 
     `regia=[alphanumeric]`
-
+    
 
 * **Parametri POST**
 
 * **Codici di Risposta**
 
   * **Codice:** `200`, OK<br/>
-    Contenuto: `{ num_rows:[numero_linee], contenuto:{} }`
+    Contenuto: `{ num_rows:[numero_linee], contenuto:[] }`
 
   * **Codice:** `204`, Nessun Contenuto<br/>
-    Contenuto: `{ 'errore':'Nessun Contenuto' }`
+    Contenuto: `{ num_rows:0 }`
 
   * **Codice:** `400`, Richiesta Errata<br/>
     Contenuto: `{ 'errore':'[descrizione dell'errore]' }`
@@ -91,5 +93,3 @@
   ```
 
 * **Notes:**
-
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>
