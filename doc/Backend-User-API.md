@@ -41,7 +41,7 @@
     Contenuto: `{ num_rows:[numero_linee], contenuto:{} }`
 
   * **Codice:** `204`, Nessun Contenuto<br/>
-    Contenuto: `{ 'errore':'Nessun Contenuto' }`
+    Contenuto: `{ 'num_rows':0 }`
 
   * **Codice:** `400`, Richiesta Errata<br/>
     Contenuto: `{ 'errore':'[descrizione dell'errore]' }`
