@@ -2,22 +2,31 @@
 
 class Database {
 
-  function __construct() {
+    function __construct() {
+        echo "A";
+    }
 
-  }
-  /**
-  *@return string query completa
-  */
-  function prepare_query($cleaned_GET) {
-    
-  }
-  /**
-  *@return array contenuto
-  */
-  function exec($query) {
+    /**
+     * @param array $cleaned_GET
+     *
+     * @return string query completa
+     */
+    function prepare_query($cleaned_GET) {
+        $query = "";
 
+        return $query;
+    }
 
-  }
+    /**
+     * @param $query
+     *
+     * @return array contenuto
+     */
+    function exec($query) {
+        $result = [];
+
+        return $result;
+    }
 
 
 }
