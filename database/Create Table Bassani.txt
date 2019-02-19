@@ -1,0 +1,82 @@
+CREATE TABLE UTENTI(
+	Email 		VARCHAR(320),
+	Nome 		VARCHAR(30),
+	Cognome 	VARCHAR(30),
+	PRIMARY KEY(Email)
+)ENGINE=INNODB;
+
+CREATE TABLE GENERE(
+	Id_Genere	INT AUTO_INCREMENT,
+	Nome_Genere	VARCHAR(20),
+	PRIMARY KEY(Id_Genere)
+)ENGINE=INNODB;
+
+CREATE TABLE LINGUE(
+	Nome_Lingua VARCHAR(15),
+	PRIMARY KEY(Nome_Lingua)
+)ENGINE=INNODB;
+
+CREATE TABLE TEMI(
+	Nome_Tema VARCHAR(15),
+	PRIMARY KEY(Nome_Tema)
+)ENGINE=INNODB;
+
+CREATE TABLE DVD(
+	Inventario 		INT,
+	Catalogo 		VARCHAR(15),
+	Collocazione 		VARCHAR(25),
+	Titolo			VARCHAR(150),
+	Titolo_Originale	VARCHAR(150),
+	Regia			VARCHAR(255),
+	Anno			INT,
+	Durata			INT,
+	Genere			INT,
+	Lingua_Originale	VARCHAR(20),
+	Altre_Lingue		VARCHAR(2),
+	Sottotitoli		VARCHAR(2),
+	Rating			FLOAT,
+	Sinossi			VARCHAR(500),
+	Temi_Sviluppati		VARCHAR(2),
+	Occasioni		VARCHAR(500),
+	Cover			VARCHAR(2083),
+	Link_Trailer		VARCHAR(2083),
+	Link_IMDB_altro		VARCHAR(2083),
+	Note			VARCHAR(100),
+	Disponibilita		VARCHAR(2),
+	PRIMARY KEY(Inventario),
+	FOREIGN KEY(Genere) REFERENCES GENERE(Id_Genere)
+)ENGINE=INNODB;
+
+CREATE TABLE DISPONIBILE(
+	Inventario 		INT,
+	Nome_Lingua 		VARCHAR(15),
+	PRIMARY KEY(Inventario, Nome_Lingua),
+	FOREIGN KEY(Inventario) REFERENCES DVD(Inventario) ON UPDATE CASCADE,
+	FOREIGN KEY(Nome_Lingua) REFERENCES LINGUE(Nome_Lingua) ON UPDATE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE SOTTOTITOLATO_IN(
+	Inventario 		INT,
+	Nome_Lingua 		VARCHAR(15),
+	PRIMARY KEY(Inventario, Nome_Lingua),
+	FOREIGN KEY(Inventario) REFERENCES DVD(Inventario) ON UPDATE CASCADE,
+	FOREIGN KEY(Nome_Lingua) REFERENCES LINGUE(Nome_Lingua) ON UPDATE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE INCLUDE(
+	Inventario 		INT,
+	Nome_Tema 		VARCHAR(15),
+	PRIMARY KEY(Inventario, Nome_Tema),
+	FOREIGN KEY(Inventario) REFERENCES DVD(Inventario) ON UPDATE CASCADE,
+	FOREIGN KEY(Nome_Tema) REFERENCES TEMI(Nome_Tema) ON UPDATE CASCADE
+)ENGINE=INNODB;
+
+CREATE TABLE NOLEGGIO(
+	Inventario 		INT,
+	Email 			VARCHAR(320),
+	DataNoleggio 		date,
+	DataScadenza		date,
+	PRIMARY KEY(Inventario, Email),
+	FOREIGN KEY(Inventario) REFERENCES DVD(Inventario) ON UPDATE CASCADE,
+	FOREIGN KEY(Email) REFERENCES UTENTI(Email) ON UPDATE CASCADE
+)ENGINE=INNODB;

@@ -1,0 +1,116 @@
+----------QUERY Noleggio di un DVD----------
+UPDATE TABLE DVD
+SET "Noleggiato da" = "E-Mail noleggiatore", "Disponibilità" = "No";
+WHERE "Inventario" = Numero_Inventario_DVD_noleggiato
+
+INSERT INTO NOLEGGIO
+VALUES(
+	"E-Mail noleggiatore",
+	Numero_Inventario_DVD_noleggiato,
+	"aaaa/mm/gg noleggio",
+	"aaaa/mm/gg restituzione"
+);
+
+----------QUERY Scadenza del noleggio di un DVD----------
+SELECT * 
+FROM DVD INNER JOIN NOLEGGIO ON(DVD."Inventario" == NOLEGGIO."Inventario")
+WHERE DataScadenza <= NOW()
+
+----------QUERY Inserimento di un DVD(tutti i campi)----------
+INSERT INTO DVD
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	"IdGenere", -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni",
+	"Cover",
+	"Link Trailer",
+	"Link imdb/altro",
+	"Note",
+	"Disponibilita" 
+);
+
+//Se sono presenti altre lingue
+INSERT INTO DISPONIBILE
+VALUES(
+	Numero_Inventario_DVD,
+	"NomeLingua", -----> LINGUE
+)ENGINE=INNODB;
+
+//Se sono presenti sottotitoli
+INSERT INTO SOTTOTITOLATO_IN
+VALUES(
+	Numero_Inventario_DVD,
+	"NomeLingua", -----> LINGUE
+)ENGINE=INNODB;
+
+----------QUERY Inserimento di un DVD(campi non obbligatori)----------
+INSERT INTO DVD ()
+VALUES(
+	,
+	,
+	,
+	,
+	,
+	,
+	,
+	,
+	,
+ 	, -----> GENERE,
+	, -----> LINGUE,
+	, (Si/No)
+	, (Si/No)
+	,
+	,
+	, (Si/No)
+	,
+	,
+	,
+	,
+	,
+	 
+);
+
+//Se sono presenti altre lingue
+INSERT INTO DISPONIBILE
+VALUES(
+	Numero_Inventario_DVD,
+	"NomeLingua", -----> LINGUE
+)ENGINE=INNODB;
+
+//Se sono presenti sottotitoli
+INSERT INTO SOTTOTITOLATO_IN
+VALUES(
+	Numero_Inventario_DVD,
+	"NomeLingua", -----> LINGUE
+)ENGINE=INNODB;
+
+----------QUERY modifica campo Disponibilità----------
+UPDATE Prenotato
+FROM DVD
+SET Prenotato= "Si/No"
+WHERE Titolo= "Titolo_DVD"
+
+----------QUERY inserimento utente----------
+//Se è un nuovo utente
+INSERT INTO Utenti('Email', 'Nome', 'Cognome') VALUES(.....);
+
+----------QUERY eliminazione dvd con n inventario----------
+DELETE FROM DVD
+WHERE Inventario=Numero_Inventario_DVD;
+----------QUERY eliminazione dvd con titolo----------
+DELETE FROM DVD 
+WHERE Titolo="Titolo_DVD";
