@@ -8,21 +8,28 @@ class Response {
      */
     function error($code, $desc = "") {
         $res = [];
-        switch ($code) {
-            case 400:
-                $res["errore"] = "Richiesta Errata";
-                break;
-            case 403:
-                $res["errore"] = "Vietato";
-                break;
-            case 404:
-                $res["errore"] = "Risorsa non trovata";
-                break;
-            default:
-                return;
-        }
+        if (isset($desc) && !empty($desc) && is_string($desc)) {
+          $res["errore"] = $desc;
+        } else
+          switch ($code) {
+                case 400:
+                    $res["errore"] = "Richiesta Errata";
+                    break;
+                case 403:
+                    $res["errore"] = "Vietato";
+                    break;
+                case 404:
+                    $res["errore"] = "Risorsa non trovata";
+                    break;
+                case 500:
+                    $res["errore"] = "Errore interno";
+                    break;
+                default:
+                    return;
+          }
+        echo json_encode($res);
         http_response_code($code);
-        die(json_encode($res));
+        exit();
     }
 
     /**
@@ -40,7 +47,8 @@ class Response {
             $code = 204;
             $res["num_rows"] = 0;
         }
+        echo json_encode($res);
         http_response_code($code);
-        die(json_encode($res));
+        exit();
     }
 }

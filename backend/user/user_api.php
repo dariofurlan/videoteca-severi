@@ -1,7 +1,7 @@
 <?php
 require_once 'request.php';
 require_once 'response.php';
-require_once 'database.php';
+
 
 $res = new Response();
 $req = new Request();
@@ -9,7 +9,14 @@ $req = new Request();
 if ($req->check_path()) {
     $resource = $req->get_path();
     if ($req->check_GET()) {
-        $res->ok(0,"moma");
+      $cleaned_GET = $req->get_GET();
+      try {
+        require_once 'database.php';
+        $db = new Database();
+        $db->prepare_query($resource, $cleaned_GET);
+      } catch(Exception $e) {
+        $res->error(500);
+      }
     } else {
         $res->error(400);
     }

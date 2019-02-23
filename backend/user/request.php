@@ -65,4 +65,3 @@ class Request {
         return $this->cleaned;
     }
 }
-
