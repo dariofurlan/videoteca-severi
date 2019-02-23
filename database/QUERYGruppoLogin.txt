@@ -13,7 +13,7 @@ VALUES(
 
 ----------QUERY Scadenza del noleggio di un DVD----------
 SELECT * 
-FROM DVD INNER JOIN NOLEGGIO ON(DVD."Inventario" == NOLEGGIO."Inventario")
+FROM DVD INNER JOIN NOLEGGIO ON(DVD.Inventario = NOLEGGIO.Inventario)
 WHERE DataScadenza <= NOW()
 
 ----------QUERY Inserimento di un DVD(tutti i campi)----------
