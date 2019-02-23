@@ -1,7 +1,7 @@
 ----------QUERY Noleggio di un DVD----------
-UPDATE TABLE DVD
-SET  "Disponibilità" = "No";
-WHERE "Inventario" = Numero_Inventario_DVD_noleggiato
+UPDATE DVD
+SET  Disponibilita = "No"
+WHERE Inventario = Numero_Inventario;
 
 INSERT INTO NOLEGGIO
 VALUES(
