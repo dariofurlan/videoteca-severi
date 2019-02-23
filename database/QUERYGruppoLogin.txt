@@ -1,6 +1,6 @@
 ----------QUERY Noleggio di un DVD----------
 UPDATE TABLE DVD
-SET "Noleggiato da" = "E-Mail noleggiatore", "Disponibilit‡" = "No";
+SET  "Disponibilit√†" = "No";
 WHERE "Inventario" = Numero_Inventario_DVD_noleggiato
 
 INSERT INTO NOLEGGIO
@@ -98,14 +98,14 @@ VALUES(
 	"NomeLingua", -----> LINGUE
 )ENGINE=INNODB;
 
-----------QUERY modifica campo Disponibilit‡----------
+----------QUERY modifica campo Disponibilit√†----------
 UPDATE Prenotato
 FROM DVD
 SET Prenotato= "Si/No"
 WHERE Titolo= "Titolo_DVD"
 
 ----------QUERY inserimento utente----------
-//Se Ë un nuovo utente
+//Se √® un nuovo utente
 INSERT INTO Utenti('Email', 'Nome', 'Cognome') VALUES(.....);
 
 ----------QUERY eliminazione dvd con n inventario----------
