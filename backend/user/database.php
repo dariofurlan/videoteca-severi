@@ -12,13 +12,13 @@ class Database {
     }
 
     /**
-     * @param array $cleaned_GET
+     * @param string $resource
      * @param array $cleaned_GET
      *
      * @return string query completa
      */
     function prepare_query($resource, $cleaned_GET) {
-        $query;
+        $query = "";
 
         return $query;
     }
