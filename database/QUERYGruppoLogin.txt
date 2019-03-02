@@ -1,7 +1,7 @@
 ----------QUERY Noleggio di un DVD----------
-UPDATE TABLE DVD
-SET "Noleggiato da" = "E-Mail noleggiatore", "Disponibilit‡" = "No";
-WHERE "Inventario" = Numero_Inventario_DVD_noleggiato
+UPDATE DVD
+SET  Disponibilita = "No"
+WHERE Inventario = Numero_Inventario;
 
 INSERT INTO NOLEGGIO
 VALUES(
@@ -13,7 +13,7 @@ VALUES(
 
 ----------QUERY Scadenza del noleggio di un DVD----------
 SELECT * 
-FROM DVD INNER JOIN NOLEGGIO ON(DVD."Inventario" == NOLEGGIO."Inventario")
+FROM DVD INNER JOIN NOLEGGIO ON(DVD.Inventario = NOLEGGIO.Inventario)
 WHERE DataScadenza <= NOW()
 
 ----------QUERY Inserimento di un DVD(tutti i campi)----------
@@ -98,14 +98,14 @@ VALUES(
 	"NomeLingua", -----> LINGUE
 )ENGINE=INNODB;
 
-----------QUERY modifica campo Disponibilit‡----------
+----------QUERY modifica campo Disponibilit√†----------
 UPDATE Prenotato
 FROM DVD
 SET Prenotato= "Si/No"
 WHERE Titolo= "Titolo_DVD"
 
 ----------QUERY inserimento utente----------
-//Se Ë un nuovo utente
+//Se √® un nuovo utente
 INSERT INTO Utenti('Email', 'Nome', 'Cognome') VALUES(.....);
 
 ----------QUERY eliminazione dvd con n inventario----------
