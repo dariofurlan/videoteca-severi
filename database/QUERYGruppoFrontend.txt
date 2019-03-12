@@ -1,0 +1,90 @@
+NCatalogo | Titolo | Regia | Tipo | Genere | Anno | Lingua audio | Lingua sottotitoli | Disponibilita
+
+1) Restituisce i campi sopra in ordine alfabetico;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+ORDER BY(Titolo)
+
+2) Dato un titolo restituisce tutti i campi sopra dei DVD con quel titolo;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Titolo = ""
+
+3) Dato un genere restituisce tutti i campi sopra dei DVD con quel genere;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere
+WHERE Nome_Genere = ""
+
+4) Dato un Regia restituisce tutti i campi sopra dei DVD con quel Regia;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Regia = ""
+
+5) Data una lingua audio restituisce tutti i campi sopra dei DVD con quella lingua audio;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD INNER JOIN DISPONIBILE ON DVD.Inventario = DISPONIBILE.Inventario
+WHERE Nome_Lingua = "" OR Lingua_Originale = ""
+
+6) Data una lingua sottotitoli restituisce tutti i campi sopra dei DVD con quella lingua sottotitoli;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD INNER JOIN SOTTOTITOLATO_IN ON DVD.Inventario = SOTTOTITOLATO_IN.Inventario
+WHERE Nome_Lingua = ""
+
+7) Dato un anno restituisce tutti i campi sopra dei DVD di quell'anno;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Anno = Anno_Dato
+
+8) Dato un tipo restituisce tutti i campi sopra dei DVD di quel tipo;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Tipo = "Tipo_Dato"
+
+9) Query per popolare le liste drop down (tipo, genere, Regia, anno, lingua audio, lingua sottotitoli);
+SELECT DISTINCT Tipo
+FROM DVD
+
+SELECT DISTINCT Nome_Genere
+FROM Genere
+
+SELECT DISTINCT Regia
+FROM DVD
+
+SELECT DISTINCT Anno
+FROM DVD
+
+//Valido sia per i sottotitoli che per la lingua originale
+SELECT Nome_Lingua
+FROM LINGUE
+
+10) Query che restituisce i campi sopra in base al campo scelto: Disponibilita, temi, rating, durata;
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Disponibilita = ""
+
+SELECT DVD.Catalogo, DVD.Titolo, DVD.Regia, DVD.Tipo, DVD.Genere, DVD.Anno, DVD.Lingua_Originale, DVD.Sottotitoli, DVD.Disponibilita
+FROM DVD INNER JOIN INCLUDE ON DVD.Inventario = INCLUDE.Inventario
+WHERE INCLUDE.Nome_Tema = ""
+
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Rating = 
+
+SELECT Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita
+FROM DVD
+WHERE Durata = 
+
+11) Query per la sinossi;
+SELECT Sinossi
+FROM DVD
+WHERE Inventario = 
+
+12) Query per il trailer;
+SELECT Link_Trailer
+FROM DVD
+WHERE Inventario = 
+
+13) Query per il rating.
+SELECT Rating
+FROM DVD
+WHERE Inventario = 
