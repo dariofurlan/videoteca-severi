@@ -1,0 +1,417 @@
+INSERT INTO DVD
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni",
+	"Cover",
+	"Link Trailer",
+	"Link imdb/altro",
+	"Note",
+	"Disponibilita" 
+);
+
+INSERT INTO DVD(Inventario, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating
+);
+
+INSERT INTO DVD (Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating, Temi_Sviluppati)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating, Temi_Sviluppati, Occasioni)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni"
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating, Temi_Sviluppati, Occasioni, Cover)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni",
+	"Cover"
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating, Temi_Sviluppati, Occasioni, Cover, Link_Trailer)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni",
+	"Cover",
+	"Link Trailer"
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating, Temi_Sviluppati, Occasioni, Cover, Link_Trailer, Link_IMDB_altro)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni",
+	"Cover",
+	"Link Trailer",
+	"Link imdb/altro"
+);
+
+INSERT INTO DVD(Inventario, Catalogo, Collocazione, Titolo, Titolo_Originale, Regia, Anno, Durata, Tipo, Genere, Lingua_Orignale, Altre_Lingue, Sottotitoli, Rating, Temi_Sviluppati, Occasioni, Cover, Link_Trailer, Link_IMDB_altro, Note)
+VALUES(
+	Numero_Inventario_DVD,
+	"Catalogo",
+	"Collocazione",
+	"Titolo",
+	"Titolo originale",
+	"Regia",
+	Anno,
+	Durata,
+	"Tipo",
+ 	IdGenere, -----> GENERE,
+	"LinguaOriginale", -----> LINGUE,
+	"Altre Lingue", (Si/No)
+	"Sottotitoli", (Si/No)
+	Rating,
+	"Sinossi",
+	"Temi Sviluppati", (Si/No)
+	"Occasioni",
+	"Cover",
+	"Link Trailer",
+	"Link imdb/altro",
+	"Note"
+);
+
+INSERT INTO UTENTI
+VALUES(
+	"E-Mail utente",
+	"Nome utente",
+	"Cognome utente"
+);
+
+INSERT INTO UTENTI(Email)
+VALUES(
+	"E-Mail utente"
+);
+
+INSERT INTO UTENTI(Email, Nome)
+VALUES(
+	"E-Mail utente",
+	"Nome utente"
+);
+
+INSERT INTO NOLEGGIO
+VALUES(
+	"E-Mail noleggiatore",
+	Numero_Inventario_DVD_noleggiato,
+	"aaaa/mm/gg noleggio",
+	"aaaa/mm/gg restituzione"
+);
+
+INSERT INTO NOLEGGIO(Email, Inventario)
+VALUES(
+	"E-Mail noleggiatore",
+	Numero_Inventario_DVD_noleggiato
+);
+
+
+INSERT INTO NOLEGGIO(Email, Inventario, DataNoleggio)
+VALUES(
+	"E-Mail noleggiatore",
+	Numero_Inventario_DVD_noleggiato,
+	"aaaa/mm/gg noleggio"
+);
+
+
+INSERT INTO LINGUE
+VALUES(
+	"Nome lingua"
+);
+
+INSERT INTO DISPONIBIlE
+VALUES(
+	Numero_Inventatio,
+	"Nome_Lingua"
+);
+
+INSERT INTO SOTTOTITOLATO_IN
+VALUES(
+	Numero_Inventatio,
+	"Nome_Lingua"
+);
+
+INSERT INTO GENERE
+VALUES(
+	Numero_Genere,
+	"Nome_Genere"
+);
+
+
+INSERT INTO GENERE(Id_Genere)
+VALUES(
+	Numero_Genere
+);
+
+
+INSERT INTO TEMI
+VALUES(
+	"Nome_Tema"
+);
+
+
+INSERT INTO INCLUDE
+VALUES(
+	Numero_Inventario,
+	"Nome_Tema"
+);
+
+INSERT INTO UTENTI
+VALUES(
+	"E-Mail utente",
+	"Nome utente",
+	"Cognome utente"
+);
+
+INSERT INTO UTENTI(Email)
+VALUES(
+	"E-Mail utente"
+);
+
+INSERT INTO ADMIN
+VALUES(
+	"Username Admin",
+	"Nome utente"
+);
