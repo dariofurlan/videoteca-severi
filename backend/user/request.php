@@ -1,10 +1,8 @@
 <?php
+require_once 'resources.php';
+
 
 class Request {
-
-    static $required = ["img" => ["id"], "dvd" => []];
-    static $optionals = ["img" => [], "dvd" => ["categoria", "regia"]];
-
     private $path = "";
     private $cleaned = [];
     private $checked = ["path" => false, "get" => false, "filtred" => false];
@@ -15,11 +13,12 @@ class Request {
     function check_path() {
         if (isset($_SERVER["PATH_INFO"]) && !empty($_SERVER["PATH_INFO"])) {
             $path = str_replace("/", "", $_SERVER["PATH_INFO"]);
-            if ($path === "dvd" || $path === "img") {
-                $this->path = $path;
-                $this->checked["path"] = true;
-                return true;
-            }
+            foreach (Resources::get_resources_list() as $item)
+                if ($path === $item) {
+                    $this->path = $path;
+                    $this->checked["path"] = true;
+                    return true;
+                }
         }
         return false;
     }
@@ -37,12 +36,12 @@ class Request {
     function check_GET() {
         if ($this->checked["path"]) {
             // controllo generico sui campi richiesti
-            foreach (Request::$required[$this->path] as $item) {
+            foreach (Resources::get_required($this->path) as $item) {
                 if (!isset($_GET[$item]) || empty($_GET[$item])) return false; else
                     $this->cleaned[$item] = $_GET[$item];
             }
             // controllo generico sui campi opzionali
-            foreach (Request::$optionals[$this->path] as $item) {
+            foreach (Resources::get_optional($this->path) as $item) {
                 if (isset($_GET[$item]) && !empty($_GET[$item])) $this->cleaned[$item] = $_GET[$item];
             }
 
