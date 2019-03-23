@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION["email"]) || empty($_SESSION["email"])) {
 	header("Location: index.php");
-  exit();
+  	exit();
 }
 require_once 'request.php';
 require_once 'response.php';
