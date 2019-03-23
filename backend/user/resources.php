@@ -1,21 +1,6 @@
 <?php
 
 class Resources {
-    static $img = [
-        "required" => ["id"],
-        "optional" => []
-    ];
-
-    static $dvd = [
-        "required" => [],
-        "optional" => ["n_catalogo", "titolo", "regia", "tipo", "genere", "anno", "lingua_audio", "lingua_sottotitoli", "disponibilita"]
-    ];
-
-    static $list = [
-        "required" => [],
-        "optional" => ["tipo", "genere", "regia", "anno", "lingua_audio", "lingua_sottotitoli"]
-    ];
-
     public static function get_resources_list() {
         $out = [];
         foreach (get_class_vars(get_called_class()) as $key => $val) array_push($out, $key);
@@ -49,4 +34,48 @@ class Resources {
     public static function get_all() {
         return get_class_vars(get_called_class());
     }
+}
+
+class GuestResources extends Resources{
+  static $img = [
+      "required" => ["id"],
+      "optional" => []
+  ];
+
+  static $dvd = [
+      "required" => [],
+      "optional" => ["n_catalogo", "titolo", "regia", "tipo", "genere", "anno", "lingua_audio", "lingua_sottotitoli", "disponibilita"]
+  ];
+
+  static $list = [
+      "required" => [],
+      "optional" => ["tipo", "genere", "regia", "anno", "lingua_audio", "lingua_sottotitoli"]
+  ];
+}
+
+class AdminResources extends Resources {
+  static $insert_dvd = [
+    "required" => [],
+    "optional" => []
+  ];
+
+  static $update_dvd = [
+    "required" => [],
+    "optional" => []
+  ];
+
+  static $delete_dvd = [
+    "required" => [],
+    "optional" => []
+  ];
+
+  static $insert_prenotazione =  [
+    "required" => [],
+    "optional" => []
+  ];
+
+  static $select_prenotazione =  [
+    "required" => [],
+    "optional" => []
+  ];
 }
