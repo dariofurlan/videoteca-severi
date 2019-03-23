@@ -10,4 +10,4 @@
 * ### [Documentazione](doc/)
   * [Lista dei gruppi](doc/GRUPPI.md)
   * [Unità di Apprendimento](doc/UDA_5ID.pdf)
-  * [GANTT](doc/Dvd_5ID.gan)
+  * [GANTT](https://drive.google.com/file/d/1-vmPnQ0urUyviN4n7iShNxbOs-8Lck8N/view?usp=sharing)
