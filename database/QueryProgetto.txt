@@ -28,4 +28,4 @@ WHERE DVD.Disponibilita = "Si" AND DVD.Temi_Sviluppati = "";
 6-
 SELECT Titolo
 FROM DVD
-WHERE DVD.Genere = "" AND DVD.DisponibilitA = "Si";
+WHERE DVD.Genere = "" AND DVD.Disponibilita = "Si";
