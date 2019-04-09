@@ -20,7 +20,8 @@ class Database {
      * @return array query completa
      */
     function prepare_query($resource, $params) {
-        $query = [];
+        $queries = [];
+        $result = [];
 
         foreach($params as $key=> $value) {
             $params[$key] = stripslashes($params[$key]);
@@ -31,13 +32,13 @@ class Database {
 
         switch ($resource) {
             case "img":
-                array_push($query, "SELECT "); // TODO
+                $queries["img"] =  "SELECT "; // TODO
                 break;
             case "dvd":
-                $campi = "Catalogo, Titolo, Regia, Tipo, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita";
-                if (count($params)===0) array_push($query, "SELECT $campi FROM DVD ORDER BY(Titolo)");
+                $campi = "Catalogo, Titolo, Regia, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita";
+                if (count($params)===0) $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
                 $joins = "";
-                $where = [];
+                $where = "";
 
                 foreach ($params as $key=>$value) {
                     switch ($key) {
@@ -46,20 +47,20 @@ class Database {
                         case "anno":
                         case "tipo":
                             // caso "normale" nessun join
-                            array_push($where,"$key = '$value'");
+                            $where.= "$key = '$value'";
                             break;
                         case "genere":
                             $joins.= " INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
-                            array_push($where,"Nome_Genere = '$value'");
+                            $where.= "Nome_Genere = '$value'";
                             break;
                         case "lingua_audio":
                             //TODO  correct the query
                             $joins.= "";
-                            array_push($where, " = '$value'");
+                            $where.= " = '$value'";
                             break;
                         case "lingua_sottotitoli":
                             $joins.= " INNER JOIN SOTTOTITOLATO_IN ON DVD.Inventario = SOTTOTITOLATO_IN.Inventario";
-                            array_push($where, "Nome_Lingua = $value");
+                            $where.= "Nome_Lingua = '$value'";
                             break;
                     }
                 }
@@ -69,7 +70,7 @@ class Database {
 
                 // lingua_sottotitoli -> dvd sottotitolato_in
 
-                array_push($query, "SELECT $campi FROM DVD $joins WHERE ");
+                $queries["dvd"] = "SELECT $campi FROM DVD $joins ". ((count($where)!=="")?"WHERE $where":"");
                 break;
             case "list":
                 if (count($params)===0)
@@ -79,32 +80,45 @@ class Database {
                         case "tipo":
                         case "regia":
                         case "anno":
-                            array_push($query, "SELECT DISTINCT $key FROM DVD");
+                            $queries[$key] = "SELECT DISTINCT $key FROM DVD";
                             break;
                         case 'genere':
-                            array_push($query, "SELECT DISTINCT Nome_Genere FROM Genere");
+                            $queries[$key] = "SELECT DISTINCT Nome_Genere FROM GENERE";
                             break;
                         case 'lingua_audio':
                         case 'lingua_sottotitoli':
-                            array_push($query, "SELECT DISTINCT Nome_Lingua FROM LINGUE");
+                            $queries[$key] = "SELECT DISTINCT Nome_Lingua FROM LINGUE";
                             break;
                     }
                 }
                 break;
         }
-        return $query;
-    }
 
-    /**
-     * @param $query
-     *
-     * @return array contenuto
-     */
-    function exec($query) {
-        $result = [];
+        switch ($resource) {
+          case "img":
 
+            break;
+          case "dvd":
+            $query = $queries["dvd"];
+            $r = $this->conn->query($query);
+            if (!$r)
+              die("Errore query ".mysqli_error($this->conn));
+            $aaa = $r->fetch_all();
+            $result["dvd"] = $aaa;
+            break;
+          case "list":
+            foreach($queries as $key=>$query) {
+              $r = $this->conn->query($query);
+              if (!$r)
+                die("Errore query ".mysqli_error($this->conn));
+              $aaa = [];
+              while($row = $r->fetch_array()) {
+                array_push($aaa,$row[0]);
+              }
+              $result[$key] = $aaa;
+            }
+            break;
+        }
         return $result;
     }
-
-
 }

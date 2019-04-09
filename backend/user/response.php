@@ -1,6 +1,7 @@
 <?php
 
 class Response {
+
     /**
      *
      * @param string $code : codice errore

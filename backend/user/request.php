@@ -8,8 +8,7 @@ class Request {
 
     function __construct($res) {
       $this->resource = $res;
-      echo $res;
-      die();
+
     }
 
     /**
@@ -18,7 +17,7 @@ class Request {
     function check_path() {
         if (isset($_SERVER["PATH_INFO"]) && !empty($_SERVER["PATH_INFO"])) {
             $path = str_replace("/", "", $_SERVER["PATH_INFO"]);
-            foreach ($this->resource::get_resources_list() as $item)
+            foreach ($this->resource->get_resources_list() as $item)
                 if ($path === $item) {
                     $this->path = $path;
                     $this->checked["path"] = true;
@@ -41,12 +40,12 @@ class Request {
     function check_GET() {
         if ($this->checked["path"]) {
             // controllo generico sui campi richiesti
-            foreach ($this->resource::get_required($this->path) as $item) {
+            foreach ($this->resource->get_required($this->path) as $item) {
                 if (!isset($_GET[$item]) || empty($_GET[$item])) return false; else
                     $this->cleaned[$item] = $_GET[$item];
             }
             // controllo generico sui campi opzionali
-            foreach ($this->resource::get_optional($this->path) as $item) {
+            foreach ($this->resource->get_optional($this->path) as $item) {
                 if (isset($_GET[$item]) && !empty($_GET[$item])) $this->cleaned[$item] = $_GET[$item];
             }
 
