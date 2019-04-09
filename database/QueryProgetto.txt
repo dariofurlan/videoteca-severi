@@ -1,31 +1,31 @@
 QUERY
 
 1-
-SELECT nomedvd
-FROM dvd INNER JOIN Disponibile ON dvd.altrelingue = disponibile.altrelingue
-WHERE dvd.linguaoriginale = "" OR disponibile.nomelingua
+SELECT Titolo 
+FROM DVD INNER JOIN DISPONIBILE ON DVD.Inventario = DISPONIBILE.Inventario 
+WHERE DVD.Lingua_Originale= "" OR DISPONIBILE.Nome_Lingua=""
 
 2-
-SELECT nomedvd
-FROM dvd
-WHERE dvd.noleggiato = "";
+SELECT Titolo 
+FROM DVD 
+WHERE DVD.Disponibilita = ""
 
 3-
-SELECT nomedvd
-FROM dvd
-WHERE dvd.tipo = "";
+SELECT Titolo
+FROM DVD
+WHERE DVD.Occasioni = "";
 
 4-
-SELECT nomedvd
-FROM dvd 
-WHERE dvd.genere = "";
+SELECT Titolo
+FROM DVD 
+WHERE DVD.Genere = "";
 
 5-
-SELECT nomedvd
-FROM dvd
-WHERE dvd.disponibilità = "SI" AND dvd.temi = "";
+SELECT Titolo
+FROM DVD
+WHERE DVD.Disponibilita = "Si" AND DVD.Temi_Sviluppati = "";
 
 6-
-SELECT nomedvd
-FROM dvd
-WHERE dvd.tipo = "" AND dvd.disponibilità = "SI";
+SELECT Titolo
+FROM DVD
+WHERE DVD.Genere = "" AND DVD.DisponibilitA = "Si";
