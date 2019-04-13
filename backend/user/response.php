@@ -38,16 +38,9 @@ class Response {
      * @param string $num_rows : numero di righe
      * @param string $contenuto : risultato della query
      */
-    function ok($num_rows, $contenuto = "") {
-        $res = [];
-        if ($num_rows > 0) {
-            $code = 200;
-            $res["num_rows"] = $num_rows;
-            $res["contenuto"] = $contenuto;
-        } else {
-            $code = 204;
-            $res["num_rows"] = 0;
-        }
+    function ok($contenuto = "") {
+        $code = 200;
+        $res["contenuto"] = $contenuto;
         echo json_encode($res);
         http_response_code($code);
         exit();

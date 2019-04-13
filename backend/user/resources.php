@@ -44,12 +44,12 @@ class GuestResources extends Resources{
 
   static $dvd = [
       "required" => [],
-      "optional" => ["n_catalogo", "titolo", "regia", "tipo", "genere", "anno", "lingua_audio", "lingua_sottotitoli", "disponibilita"]
+      "optional" => ["n_catalogo", "titolo", "regia", "genere", "anno", "lingua_audio", "lingua_sottotitoli", "disponibilita"]
   ];
 
   static $list = [
       "required" => [],
-      "optional" => ["tipo", "genere", "regia", "anno", "lingua_audio", "lingua_sottotitoli"]
+      "optional" => ["genere", "regia", "anno", "lingua_audio", "lingua_sottotitoli"]
   ];
 }
 

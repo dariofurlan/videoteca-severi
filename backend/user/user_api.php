@@ -14,7 +14,7 @@ if ($req->check_path()) {
         require_once 'database.php';
         $db = new Database();
         $result = $db->prepare_query($resource, $cleaned_GET);
-        $res->ok(1,$result);
+        $res->ok($result);
       } catch(Exception $e) {
         $res->error(500);
       }

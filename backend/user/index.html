@@ -1,0 +1,21 @@
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<script>
+
+$.ajax({
+  url: "./user_api.php/"+"list",
+  data: {anno:1, regia:1, tipo:1, genere:1, lingua_audio:1, lingua_sottotitoli:1},
+  success: function(result, status, xhr) {
+    console.log(typeof xhr.responseText);
+    console.log(xhr.responseText);
+    let json = JSON.parse(xhr.responseText);
+    console.log(typeof json);
+    console.log(json);
+  },
+  error: function() {
+    alert("Errore");
+  }
+});
+
+</script>

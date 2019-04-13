@@ -41,36 +41,33 @@ class Database {
                 $where = "";
 
                 foreach ($params as $key=>$value) {
-                    switch ($key) {
-                        case "titolo":
-                        case "regia":
-                        case "anno":
-                        case "tipo":
-                            // caso "normale" nessun join
-                            $where.= "$key = '$value'";
-                            break;
-                        case "genere":
-                            $joins.= " INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
-                            $where.= "Nome_Genere = '$value'";
-                            break;
-                        case "lingua_audio":
-                            //TODO  correct the query
-                            $joins.= "";
-                            $where.= " = '$value'";
-                            break;
-                        case "lingua_sottotitoli":
-                            $joins.= " INNER JOIN SOTTOTITOLATO_IN ON DVD.Inventario = SOTTOTITOLATO_IN.Inventario";
-                            $where.= "Nome_Lingua = '$value'";
-                            break;
-                    }
+                  switch ($key) {
+                    case "titolo":
+                    case "regia":
+                    case "anno":
+                    case "tipo":
+                        // caso "normale" nessun join
+                        $where.= "$key = '$value'";
+                        break;
+                    case "genere":
+                        $joins.= " INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
+                        $where.= "Nome_Genere = '$value'";
+                        break;
+                    case "lingua_audio":
+                        //TODO  correct the query
+                        $joins.= "";
+                        $where.= " = '$value'";
+                        break;
+                    case "lingua_sottotitoli":
+                        $joins.= " INNER JOIN SOTTOTITOLATO_IN ON DVD.Inventario = SOTTOTITOLATO_IN.Inventario";
+                        $where.= "Nome_Lingua = '$value'";
+                        break;
+                  }
                 }
                 // titolo, regia, anno, tipo -> DVD
-
                 // genere -> DVD, GENERE
-
                 // lingua_sottotitoli -> dvd sottotitolato_in
-
-                $queries["dvd"] = "SELECT $campi FROM DVD $joins ". ((count($where)!=="")?"WHERE $where":"");
+                $queries["dvd"] = "SELECT $campi FROM DVD $joins ". (($where!=="")?"WHERE $where":"");
                 break;
             case "list":
                 if (count($params)===0)
@@ -80,7 +77,7 @@ class Database {
                         case "tipo":
                         case "regia":
                         case "anno":
-                            $queries[$key] = "SELECT DISTINCT $key FROM DVD";
+                            $queries[$key] = "SELECT DISTINCT ".ucfirst($key)." FROM DVD";
                             break;
                         case 'genere':
                             $queries[$key] = "SELECT DISTINCT Nome_Genere FROM GENERE";
@@ -100,6 +97,8 @@ class Database {
             break;
           case "dvd":
             $query = $queries["dvd"];
+            // print_r($query);
+            // echo "<br/>";
             $r = $this->conn->query($query);
             if (!$r)
               die("Errore query ".mysqli_error($this->conn));
