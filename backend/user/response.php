@@ -38,10 +38,39 @@ class Response {
      * @param string $num_rows : numero di righe
      * @param string $contenuto : risultato della query
      */
-    function ok($contenuto = "") {
+    function ok($contenuto = "{}") {
         $code = 200;
+        $res = array();
         $res["contenuto"] = $contenuto;
-        echo json_encode($res);
+        $json =  json_encode($res, JSON_UNESCAPED_UNICODE);
+
+        $jsonError = json_last_error();
+        if($jsonError != JSON_ERROR_NONE){
+            $error = 'Could not decode JSON! ';
+            switch($jsonError){
+                case JSON_ERROR_DEPTH:
+                    $error .= 'Maximum depth exceeded!';
+                break;
+                case JSON_ERROR_STATE_MISMATCH:
+                    $error .= 'Underflow or the modes mismatch!';
+                break;
+                case JSON_ERROR_CTRL_CHAR:
+                    $error .= 'Unexpected control character found';
+                break;
+                case JSON_ERROR_SYNTAX:
+                    $error .= 'Malformed JSON';
+                break;
+                case JSON_ERROR_UTF8:
+                     $error .= 'Malformed UTF-8 characters found!';
+                break;
+                default:
+                    $error .= 'Unknown error!';
+                break;
+            }
+            throw new Exception($error);
+            return;
+        }
+        echo $json;
         http_response_code($code);
         exit();
     }

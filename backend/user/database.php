@@ -36,9 +36,10 @@ class Database {
                 break;
             case "dvd":
                 $campi = "Catalogo, Titolo, Regia, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita";
-                if (count($params)===0) $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
+                if (count($params)===0)
+                  $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
                 $joins = "";
-                $where = "";
+                $where = [];
 
                 foreach ($params as $key=>$value) {
                   switch ($key) {
@@ -47,27 +48,30 @@ class Database {
                     case "anno":
                     case "tipo":
                         // caso "normale" nessun join
-                        $where.= "$key = '$value'";
+                        array_push($where, ucfirst($key)." = '$value'");
                         break;
                     case "genere":
                         $joins.= " INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
-                        $where.= "Nome_Genere = '$value'";
+                        array_push($where, "Nome_Genere = '$value'");
                         break;
                     case "lingua_audio":
                         //TODO  correct the query
-                        $joins.= "";
-                        $where.= " = '$value'";
+                        //$joins.= "";
+                        //$where.= " = '$value'";
                         break;
                     case "lingua_sottotitoli":
                         $joins.= " INNER JOIN SOTTOTITOLATO_IN ON DVD.Inventario = SOTTOTITOLATO_IN.Inventario";
-                        $where.= "Nome_Lingua = '$value'";
+                        array_push($where, "Nome_Lingua = '$value'");
                         break;
                   }
                 }
-                // titolo, regia, anno, tipo -> DVD
-                // genere -> DVD, GENERE
-                // lingua_sottotitoli -> dvd sottotitolato_in
-                $queries["dvd"] = "SELECT $campi FROM DVD $joins ". (($where!=="")?"WHERE $where":"");
+                $where_str = "";
+                if (count($where)>0)
+                  $where_str = "WHERE ". $where[0];
+                for ($i=1;$i<count($where);$i++) {
+                  $where_str.= " AND ".$where[$i];
+                }
+                $queries["dvd"] = "SELECT $campi FROM DVD $joins $where_str";
                 break;
             case "list":
                 if (count($params)===0)
@@ -89,6 +93,8 @@ class Database {
                     }
                 }
                 break;
+            case "insert_prenotazione":
+                $queries[$key] = "";
         }
 
         switch ($resource) {
@@ -97,12 +103,10 @@ class Database {
             break;
           case "dvd":
             $query = $queries["dvd"];
-            // print_r($query);
-            // echo "<br/>";
             $r = $this->conn->query($query);
             if (!$r)
               die("Errore query ".mysqli_error($this->conn));
-            $aaa = $r->fetch_all();
+            $aaa = $r->fetch_all(MYSQLI_ASSOC);
             $result["dvd"] = $aaa;
             break;
           case "list":

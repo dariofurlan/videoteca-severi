@@ -4,8 +4,8 @@
 <script>
 
 $.ajax({
-  url: "./user_api.php/"+"list",
-  data: {anno:1, regia:1, tipo:1, genere:1, lingua_audio:1, lingua_sottotitoli:1},
+  url: "./user_api.php/"+"dvd",
+  data: {},
   success: function(result, status, xhr) {
     console.log(typeof xhr.responseText);
     console.log(xhr.responseText);

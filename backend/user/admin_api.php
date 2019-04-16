@@ -4,7 +4,7 @@ require_once 'response.php';
 require_once 'resources.php';
 
 $res = new Response();
-$req = new Request(new GuestResources());
+$req = new Request(new AdminResources());
 
 if ($req->check_path()) {
     $resource = $req->get_path();
@@ -16,7 +16,7 @@ if ($req->check_path()) {
         $result = $db->prepare_query($resource, $cleaned_GET);
         $res->ok($result);
       } catch(Exception $e) {
-        $res->error(500, $e->getMessage());
+        $res->error(500);
       }
     } else {
         $res->error(400);
