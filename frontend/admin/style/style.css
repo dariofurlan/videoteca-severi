@@ -1,0 +1,72 @@
+.centra {
+    width: 80%;
+}
+
+.table {
+    border-radius: 5px;
+    width: 80%;
+    margin: 0px auto;
+    float: none;
+}
+
+.unstyled-button {
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+.unstyled-button:hover {
+    border: none;
+    padding: 0;
+    background: none;
+    color: blue;
+}
+
+#casella{
+    height: 80%;
+}
+
+#ricercaAvanzata{
+    text-decoration: underline;
+}
+
+#ricercaAvanzata:hover{
+    text-decoration: underline;
+    color: #E20E0E;
+}
+
+#BottoneCerca{
+    width: 60%;
+}
+
+th{
+    text-align: center;
+}
+
+td{
+    text-align: center;
+}
+
+
+#primaRiga{
+    margin: auto;
+    max-width: 90%;
+    text-align:center;
+}
+
+#secondaRiga{
+    margin: auto;
+    max-width: 90%;
+    text-align:center;
+}
+
+h1 { color: #343a40;
+     font-size: 48px;
+     text-align: center;
+     font-family: 'Segoe Print';
+     padding-bottom: 10px;
+}
+
+#btnLogin{
+    margin: 9px;
+}
