@@ -43,32 +43,10 @@ class Response {
         $res = array();
         $res["contenuto"] = $contenuto;
         $json =  json_encode($res, JSON_UNESCAPED_UNICODE);
-
         $jsonError = json_last_error();
-        if($jsonError != JSON_ERROR_NONE){
-            $error = 'Could not decode JSON! ';
-            switch($jsonError){
-                case JSON_ERROR_DEPTH:
-                    $error .= 'Maximum depth exceeded!';
-                break;
-                case JSON_ERROR_STATE_MISMATCH:
-                    $error .= 'Underflow or the modes mismatch!';
-                break;
-                case JSON_ERROR_CTRL_CHAR:
-                    $error .= 'Unexpected control character found';
-                break;
-                case JSON_ERROR_SYNTAX:
-                    $error .= 'Malformed JSON';
-                break;
-                case JSON_ERROR_UTF8:
-                     $error .= 'Malformed UTF-8 characters found!';
-                break;
-                default:
-                    $error .= 'Unknown error!';
-                break;
-            }
-            throw new Exception($error);
-            return;
+        if ($jsonError != JSON_ERROR_NONE) {
+          throw new Exception("Errore Json");
+          return;
         }
         echo $json;
         http_response_code($code);

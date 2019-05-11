@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="it">
+<head>
+    <title>Videoteca ITI Severi - Ricerca</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+    <script src="resources/js/bootstrap.bundle.min.js"></script>
+    <script src="resources/js/jquery-3.4.1.min.js"></script>
+
+    <link rel="stylesheet" href="./style.css"/>
+</head>
+<body>
+
+<div id="top-bar">
+    <a href="index.html"><h1 id="title">Videoteca ITI Severi</h1></a>
+    <button class="btn btn-md bg-dark text-white" id="btnLogin">Login</button>
+    <button class="btn btn-danger btn-md bg-dark text-white" id="btnLogout" style="display: none">Logout</button>
+</div>
+
+<div id="velo">
+    <div id="overlay_box">
+        <button id="close_overlay" onclick="onclosevelo();">⨯</button>
+        <div id="overlay_contenuto">
+            <div id="overlay_login">
+                <form action="login.php" method="post">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="User Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <input type="submit" name="invio" value="invio" class="btn btn-primary">
+                </form>
+            </div>
+            <div id="overlay_prenotazione">
+                <h1>prenotazione</h1>
+            </div>
+            <div id="overlay_schedafilm">
+                <h1>Scheda Film</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form onsubmit="return onformsubmit();">
+
+    <div class="row riga" id="primaRiga">
+        <!-- Titolo -->
+        <div class="col-lg-3 offset-lg-1">
+            <input id="inputtitolo" list="listatitoli" value="" class="custom-select" placeholder="Titolo">
+            <datalist id="listatitoli">
+            </datalist>
+        </div>
+        <!-- Genere -->
+        <div class="col-lg-2">
+            <input id="inputgenere" list="listagenere" value="" class="custom-select" placeholder="Genere">
+            <datalist id="listagenere">
+            </datalist>
+        </div>
+        <!-- Disponibilità -->
+        <div class="col-lg-2">
+            <select class="form-control d-inline-block" id="listadispobibilita">
+                <option value="" disabled selected hidden>Disponibilità</option>
+                <option value="Si">Disponibile</option>
+                <option value="No">Non disponibile</option>
+                <option value="">Qualsiasi</option>
+            </select>
+        </div>
+
+        <!-- Cerca -->
+        <div class="col-lg-2">
+            <button class="btn btn-md bg-dark text-white" id="BottoneCerca">Cerca</button>
+        </div>
+
+        <!-- Ricerca avanzata -->
+        <div class="col-lg-1">
+            <a id="ricercaAvanzata">Ricerca Avanzata</a>
+        </div>
+    </div>
+
+    <!-- Seconda riga -->
+    <div class="row riga hidden" id="secondaRiga">
+
+        <!-- Regista -->
+        <div class="col-lg-3 offset-lg-1">
+            <input id="inputregista" list="listaregista" value="" class="custom-select" placeholder="Regista">
+            <datalist id="listaregista">
+            </datalist>
+        </div>
+
+        <!-- Anno -->
+        <div class="col-lg-1">
+            <select class="form-control d-inline-block" id="listaanni">
+                <option value="" disabled selected hidden>Anno</option>
+            </select>
+        </div>
+
+        <!-- Lingua audio -->
+        <div class="col-lg-1">
+            <select class="form-control d-inline-block" id="listaaudio">
+                <option value="" disabled selected hidden>Lingua Audio</option>
+
+            </select>
+        </div>
+
+        <!-- Lingua sottotitoli -->
+        <div class="col-lg-1">
+            <select class="form-control d-inline-block" id="listasottotitoli">
+                <option value="" disabled selected hidden>Lingua Sottotitoli</option>
+
+            </select>
+        </div>
+
+
+        <!-- Rating -->
+        <div class="col-lg-1">
+            <select name="rating" class="form-control" id="rating">
+                <option value="" disabled selected hidden>Rating</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">N</th>
+        <th scope="col">Titolo</th>
+        <th scope="col">Regista</th>
+        <th scope="col">Genere</th>
+        <th scope="col">Anno</th>
+        <th scope="col">Lingua audio</th>
+        <th scope="col">Lingua sottotitoli</th>
+        <th scope="col">Disponibilità</th>
+        <th scope="col">Prenota</th>
+    </tr>
+    </thead>
+    <tbody id="table-body">
+
+    </tbody>
+</table>
+
+<script type="text/javascript" src="./script.js"></script>
+
+</body>
+</html>

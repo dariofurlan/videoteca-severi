@@ -1,0 +1,91 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+
+.main-head {
+    height: 150px;
+    background: #FFF;
+
+}
+
+.sidenav {
+    height: 100%;
+    background-color: #343a40;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+
+.main {
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .login-form {
+        margin-top: 10%;
+    }
+
+    .register-form {
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .main {
+        margin-left: 40%;
+    }
+
+    .mainPrenota {
+        margin-left: 10%;
+    }
+
+    .sidenav {
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form {
+        margin-top: 80%;
+    }
+
+    .prenota-form {
+        margin-top: 20%;
+    }
+
+}
+
+
+.login-main-text {
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2 {
+    font-weight: 300;
+}
+
+.prenota-main-text {
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+}
+
+.prenota-main-text h2 {
+    font-weight: 300;
+}
+
+.btn-black {
+    background-color: #343a40 !important;
+    color: #fff;
+}

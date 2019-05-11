@@ -1,18 +1,13 @@
 <?php
 require_once 'resources.php';
 require_once 'vars.php';
-
-
 class Database {
-
     private $conn;
-
     function __construct() {
         $this->conn = new mysqli(HOST, USER, PASSWORD, DB);
         if ($this->conn->connect_error)
             throw new Error("Errore connesione al database");
     }
-
     /**
      * @param string $resource
      * @param array $params
@@ -22,14 +17,11 @@ class Database {
     function prepare_query($resource, $params) {
         $queries = [];
         $result = [];
-
         foreach($params as $key=> $value) {
             $params[$key] = stripslashes($params[$key]);
             $params[$key] = mysqli_real_escape_string($this->conn, $params[$key]);
         }
-
         // TODO all sql injection checks
-
         switch ($resource) {
             case "img":
                 $queries["img"] =  "SELECT "; // TODO
@@ -40,7 +32,6 @@ class Database {
                   $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
                 $joins = "";
                 $where = [];
-
                 foreach ($params as $key=>$value) {
                   switch ($key) {
                     case "titolo":
@@ -78,9 +69,11 @@ class Database {
                     break;
                 foreach($params as $key=>$value) {
                     switch ($key) {
-                        case "tipo":
+						//NON FUNZIONA, AAAAAAAAAAAAAAAAAAAAAA
+						case "titolo": 
                         case "regia":
-                        case "anno":
+                        case "anno": 
+
                             $queries[$key] = "SELECT DISTINCT ".ucfirst($key)." FROM DVD";
                             break;
                         case 'genere':
@@ -94,12 +87,16 @@ class Database {
                 }
                 break;
             case "insert_prenotazione":
-                $queries[$key] = "";
+				//$campi = "Catalogo, Titolo, Regia, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita";
+                if (count($params)===0)break;
+                $queries["insert_prenotazione"] = "UPDATE DVD SET Disponibilita = 'No' ";
+                $joins = "";
+                $where = "Titolo = '$params[titolo]'";
+                $queries["insert_prenotazione"].=" WHERE $where";
+				break; 
         }
-
         switch ($resource) {
           case "img":
-
             break;
           case "dvd":
             $query = $queries["dvd"];
