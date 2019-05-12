@@ -17,7 +17,7 @@ class Response {
                     $res["errore"] = "Richiesta Errata";
                     break;
                 case 403:
-                    $res["errore"] = "Vietato";
+                    $res["errore"] = "Non Autorizzato";
                     break;
                 case 404:
                     $res["errore"] = "Risorsa non trovata";
@@ -35,19 +35,18 @@ class Response {
 
     /**
      *
-     * @param string $num_rows : numero di righe
      * @param string $contenuto : risultato della query
+     * @param $additional_info
      */
-    function ok($contenuto = "{}") {
+    function ok($contenuto = "{}", $additional_info=array()) {
         $code = 200;
         $res = array();
         $res["contenuto"] = $contenuto;
+        foreach ($additional_info as $item=>$value) {
+            $res[$item] = $value;
+        }
         $json =  json_encode($res, JSON_UNESCAPED_UNICODE);
         $jsonError = json_last_error();
-        if ($jsonError != JSON_ERROR_NONE) {
-          throw new Exception("Errore Json");
-          return;
-        }
         echo $json;
         http_response_code($code);
         exit();

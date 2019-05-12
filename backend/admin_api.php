@@ -1,26 +1,72 @@
 <?php
-require_once 'request.php';
+session_start();
 require_once 'response.php';
-require_once 'resources.php';
 
 $res = new Response();
-$req = new Request(new AdminResources());
 
-if ($req->check_path()) {
-    $resource = $req->get_path();
-    if ($req->check_GET()) {
-      $cleaned_GET = $req->get_GET();
-      try {
-        require_once 'database.php';
-        $db = new Database();
-        $result = $db->prepare_query($resource, $cleaned_GET);
-        $res->ok($result);
-      } catch(Exception $e) {
-        $res->error(500);
-      }
-    } else {
-        $res->error(400);
+//
+
+try {
+    if (isset($_SERVER["PATH_INFO"]) && !empty($_SERVER["PATH_INFO"])) {
+        $path = str_replace("/", "", $_SERVER["PATH_INFO"]);
+    } else throw new Exception("Manca percorso!");
+
+    if ($path === "login") {
+        $res->ok("", ["logged" => "true"]);
+        log_in();
+    } elseif ($path === "logout") {
+        log_out();
+    } elseif ($path === "is_logged") {
+        is_logged();
+        $res->ok("",["logged"=>"false"]);
     }
-} else {
-    $res->error(404);
+
+} catch (Exception $e) {
+    $res->error(400, $e);
+}
+
+function is_logged() {
+    global $res;
+    if (isset($_SESSION["username"]) && !empty($_SESSION["username"])) {
+        $res->ok("", ["logged" => "true"]);
+    }
+}
+
+function log_in() {
+    global $res;
+//    require_once 'conn.php';
+
+    if (!isset($_POST["username"]) || empty($_POST["username"])) {
+        $res->error(400,"Manca username");
+    } else {
+        $username = mysqli_real_escape_string($conn, stripslashes($_POST["username"]));
+    }
+
+    if (!isset($_POST["password"]) || empty($_POST["password"])) {
+        $res->error(400,"Manca password");
+    } else {
+        $password = mysqli_real_escape_string($conn, stripslashes($_POST["password"]));
+        $passmd5 = md5($password);
+    }
+
+    $sql = "SELECT * FROM ADMIN WHERE username='$username' AND password='$passmd5'";
+    $result = $conn->query($sql);
+
+    if (!$result) {
+        $res->error(500,"Errore Login");
+    } else {
+        if ($result->num_rows === 1) {
+            $_SESSION["username"] = $username;
+        } else {
+            $res->error(403);
+        }
+    }
+}
+
+function log_out() {
+    global $res;
+    session_start();
+    session_unset();
+    session_destroy();
+    $res->ok("", ["logged" => "false"]);
 }

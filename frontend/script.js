@@ -77,9 +77,9 @@ function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotit
     };
     row.style.cursor = "pointer";
 
-    function td(text) {
+    function td(text = "") {
         let td = document.createElement('td');
-        td.innerText = text || "";
+        td.innerText = text;
         return td;
     }
 
@@ -87,13 +87,13 @@ function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotit
     N.scope = "row";
     N.innerText = id;
     row.appendChild(N);
-    row.appendChild(td(titolo || ""));
-    row.appendChild(td(regista || ""));
-    row.appendChild(td(genere || ""));
-    row.appendChild(td(anno || ""));
-    row.appendChild(td(lingua_audio || ""));
-    row.appendChild(td(lingua_sottotitoli || ""));
-    const disp = td(disponibilita || "");
+    row.appendChild(td(titolo));
+    row.appendChild(td(regista));
+    row.appendChild(td(genere));
+    row.appendChild(td(anno));
+    row.appendChild(td(lingua_audio));
+    row.appendChild(td(lingua_sottotitoli));
+    const disp = td(disponibilita);
     disp.style.fontWeight = (disponibilita === "Si") ? "normal" : "bold";
     row.appendChild(disp);
 
@@ -119,9 +119,13 @@ function onrowclick() {
     velo.show();
 }
 
+function onclosevelo() {
+    velo.hide();
+}
+
 function onformsubmit() {
-    const params = {};
     try {
+        const params = {};
         Object.keys(liste).forEach(key => {
             let obj = liste[key];
             let v;
@@ -136,36 +140,58 @@ function onformsubmit() {
                 params[key] = v;
         });
         console.log(params);
-    } catch (error) {
+    } catch (e) {
 
     }
     return false;
 }
 
-function onclosevelo() {
-    velo.hide();
+function onformlogin() {
+    try {
+        $.get("../backend/admin_api.php/login", (data) => {
+            let response = JSON.parse(data);
+            if (response.logged)
+                if (response.logged === "true") {
+                    logged = true;
+                    console.info("logged");
+                }
+        }).fail(() => {
+            console.info("not logged");
+        }).always(() => {
+            if (logged) {
+                btnLogin.style.display = "none";
+                btnLogout.style.display = "block";
+            } else {
+                btnLogin.style.display = "block";
+                btnLogout.style.display = "none";
+            }
+            request_dvd({});
+        });
+    } catch (e) {
+
+    }
+    return false;
 }
 
 function request_dvd(params) {
     $.ajax({
-        url: "http://10.0.1.252/biblioteca/biblio/backend/user_api.php/" + "dvd",
+        url: "../backend/user_api.php/" + "dvd",
         data: params,
         success: function (result, status, xhr) {
             let json = JSON.parse(result);
             console.log(json);
-            /** @namespace json.contenuto.dvd */
             json.contenuto.dvd.forEach(row => {
                 addRow(row.Catalogo, row.Titolo, row.Regia, row.Genere, row.Anno, row.Lingua_Originale, row.Sottotitoli, row.Disponibilita)
             });
         },
-        error: function (err) {
-            console.error(err);
+        error: function () {
+            console.error("Errore restituzione dvd");
         }
     });
 }
 
 function prenotazione(value) {
-    alert("TODO" + value);
+    overlay_prenotazione.show();
 }
 
 btnLogin.onclick = () => {
@@ -173,7 +199,9 @@ btnLogin.onclick = () => {
 };
 
 btnLogout.onclick = () => {
-    window.location.href = "logout.php";
+    $.get("../backend/admin_api.php/logout", () => {
+        logged = false;
+    });
 };
 
 ricercaAvanzata.onclick = () => {
@@ -184,7 +212,7 @@ window.onload = function () {
     secondaRiga.style.display = 'none';
 
     $.ajax({
-        url: "http://10.0.1.252/biblioteca/biblio/backend/user_api.php/" + "list",
+        url: "../backend/user_api.php/" + "list",
         data: {"titoli": 2, "genere": 1, "regia": 1, "anno": 1, "lingua_audio": 1, "lingua_sottotitoli": 1},
         success: function (result) {
             let json = JSON.parse(result);
@@ -207,11 +235,15 @@ window.onload = function () {
         }
     });
 
-    console.log("A");
-
-    $.get("http://10.0.1.252/biblioteca/biblio/frontend/is_logged.php", (data) => {
-        if (data === "true")
-            logged = true;
+    $.get("../backend/admin_api.php/is_logged", (data) => {
+        let response = JSON.parse(data);
+        if (response.logged)
+            if (response.logged === "true") {
+                logged = true;
+                console.info("logged");
+            }
+    }).fail(() => {
+        console.info("not logged");
     }).always(() => {
         if (logged) {
             btnLogin.style.display = "none";
@@ -220,12 +252,11 @@ window.onload = function () {
             btnLogin.style.display = "block";
             btnLogout.style.display = "none";
         }
-        request_dvd({})
+        request_dvd({});
     });
 };
 
 
-for (let i=0;i<20;i++) {
-    console.log(i);
+for (let i = 0; i < 20; i++) {
     addRow();
 }
