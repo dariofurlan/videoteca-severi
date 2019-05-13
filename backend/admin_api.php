@@ -4,7 +4,7 @@ require_once 'response.php';
 
 $res = new Response();
 
-//
+//TODO impostare durata del cookie di sessione a un poì di giorni tipo 15
 
 try {
     if (isset($_SERVER["PATH_INFO"]) && !empty($_SERVER["PATH_INFO"])) {

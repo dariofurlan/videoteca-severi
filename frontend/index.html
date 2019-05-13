@@ -23,16 +23,16 @@
         <button id="close_overlay" onclick="onclosevelo();">⨯</button>
         <div id="overlay_contenuto">
             <div id="overlay_login">
-                <form onsubmit="return onformlogin();">
+                <form id="login-form" method="post">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="User Name">
+                        <input id="login-username" type="text" name="username" class="form-control" placeholder="User Name">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <input id="login-password" type="password" name="password" class="form-control" placeholder="Password">
                     </div>
-                    <input type="button" name="invio" value="invio" class="btn btn-primary">
+                    <input type="submit" value="Invio" class="btn btn-primary">
                 </form>
             </div>
             <div id="overlay_prenotazione">
@@ -66,7 +66,7 @@
 
     <div class="row riga" id="primaRiga">
         <!-- Titolo -->
-        <div class="col-lg-3 offset-lg-1">
+        <div class="col-lg-4">
             <input id="inputtitolo" list="listatitoli" value="" class="custom-select" placeholder="Titolo">
             <datalist id="listatitoli">
             </datalist>
@@ -87,53 +87,49 @@
             </select>
         </div>
 
-        <!-- Cerca -->
-        <div class="col-lg-2">
-            <button class="btn btn-md bg-dark text-white" id="BottoneCerca">Cerca</button>
+        <div class="col-lg-1">
+            <a id="reset">Reset</a>
         </div>
-
-        <!-- Ricerca avanzata -->
         <div class="col-lg-1">
             <a id="ricercaAvanzata">Ricerca Avanzata</a>
         </div>
+        <div class="col-lg-2">
+            <button class="btn bg-dark text-white" id="BottoneCerca">Cerca</button>
+        </div>
     </div>
 
-    <!-- Seconda riga -->
     <div class="row riga hidden" id="secondaRiga">
 
         <!-- Regista -->
-        <div class="col-lg-3 offset-lg-1">
+        <div class="col-lg-4">
             <input id="inputregista" list="listaregista" value="" class="custom-select" placeholder="Regista">
             <datalist id="listaregista">
             </datalist>
         </div>
 
         <!-- Anno -->
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listaanni">
                 <option value="" disabled selected hidden>Anno</option>
             </select>
         </div>
 
         <!-- Lingua audio -->
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listaaudio">
                 <option value="" disabled selected hidden>Lingua Audio</option>
-
             </select>
         </div>
 
         <!-- Lingua sottotitoli -->
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listasottotitoli">
                 <option value="" disabled selected hidden>Lingua Sottotitoli</option>
-
             </select>
         </div>
 
-
         <!-- Rating -->
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <select name="rating" class="form-control" id="rating">
                 <option value="" disabled selected hidden>Rating</option>
                 <option>1</option>
@@ -149,6 +145,7 @@
             </select>
         </div>
     </div>
+
 </form>
 
 <table class="table table-striped">

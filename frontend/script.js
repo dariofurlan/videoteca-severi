@@ -3,47 +3,72 @@ const ricercaAvanzata = document.getElementById('ricercaAvanzata');
 const tableBody = document.getElementById('table-body');
 const btnLogin = document.getElementById('btnLogin');
 const btnLogout = document.getElementById('btnLogout');
-const velo = document.getElementById('velo');
-velo.show = () => {
-    velo.style.display = "block";
-};
-velo.hide = () => {
-    velo.style.display = "none";
-    overlay_login.hide();
-    overlay_prenotazione.hide();
-    overlay_schedafilm.hide();
-};
 
-const overlay_login = document.getElementById('overlay_login');
-overlay_login.show = () => {
-    overlay_login.style.display = "block";
-    velo.show();
-};
-overlay_login.hide = () => {
-    overlay_login.style.display = "none";
-    velo.hide();
-};
+function Overlay() {
+    this.velo = document.getElementById('velo');
+    this.loaded = null;
 
-const overlay_schedafilm = document.getElementById('overlay_schedafilm');
-overlay_schedafilm.show = () => {
-    overlay_schedafilm.style.display = "block";
-    velo.show();
-};
-overlay_schedafilm.hide = () => {
-    overlay_schedafilm.style.display = "none";
-    velo.hide();
-};
+    this.prenotazione = () => {
+        this.loaded = document.getElementById('overlay_prenotazione');
+        return this;
+    };
 
-const overlay_prenotazione = document.getElementById('overlay_prenotazione');
-overlay_prenotazione.show = () => {
-    overlay_prenotazione.style.display = "block";
-    velo.show();
-};
-overlay_prenotazione.hide = () => {
-    overlay_prenotazione.style.display = "none";
-    velo.hide();
-};
+    this.schedafilm = () => {
+        this.loaded = document.getElementById('overlay_schedafilm');
+        return this;
+    };
 
+    this.login = () => {
+        this.loaded = document.getElementById('overlay_login');
+        const login_form = document.getElementById('login-form');
+
+        login_form.onsubmit = () => {
+            try {
+                let username = login_form[0].value;
+                let password = login_form[1].value;
+                $.ajax({
+                    type: "POST",
+                    url: "../backend/admin_api.php/login",
+                    data: {username, password}
+                }).done((data) => {
+                    let response = JSON.parse(data);
+                    if (response.logged && response.logged === "true") {
+                        logged = true;
+                        console.info("logged");
+                    }
+                }).fail(() => {
+
+                }).always(() => {
+                    if (logged) {
+                        btnLogin.style.display = "none";
+                        btnLogout.style.display = "block";
+                    } else {
+                        btnLogin.style.display = "block";
+                        btnLogout.style.display = "none";
+                    }
+                });
+            } catch (e) {
+
+            }
+            return false;
+        };
+        console.log(login_form);
+        console.log("A");
+        return this;
+    };
+
+    this.show = () => {
+        this.velo.style.display = "block";
+        this.loaded.style.display = "block";
+    };
+
+    this.hide = () => {
+        this.velo.style.display = "none";
+        this.loaded.style.display = "none";
+    };
+}
+
+const overlay = new Overlay();
 
 const liste = {
     genere: document.getElementById('listagenere'),
@@ -63,7 +88,7 @@ const datalists = {
 let count_rows = 1;
 let logged = false;
 
-function addOption(lista, value) {
+function addOptionToList(lista, value) {
     let el = document.createElement('option');
     el.value = value;
     el.innerText = value;
@@ -73,7 +98,7 @@ function addOption(lista, value) {
 function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotitoli, disponibilita) {
     let row = document.createElement('tr');
     row.onclick = () => {
-        onrowclick({});
+        overlay.schedafilm().show();
     };
     row.style.cursor = "pointer";
 
@@ -115,12 +140,8 @@ function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotit
     tableBody.appendChild(row);
 }
 
-function onrowclick() {
-    velo.show();
-}
-
 function onclosevelo() {
-    velo.hide();
+    overlay.hide();
 }
 
 function onformsubmit() {
@@ -147,30 +168,7 @@ function onformsubmit() {
 }
 
 function onformlogin() {
-    try {
-        $.get("../backend/admin_api.php/login", (data) => {
-            let response = JSON.parse(data);
-            if (response.logged)
-                if (response.logged === "true") {
-                    logged = true;
-                    console.info("logged");
-                }
-        }).fail(() => {
-            console.info("not logged");
-        }).always(() => {
-            if (logged) {
-                btnLogin.style.display = "none";
-                btnLogout.style.display = "block";
-            } else {
-                btnLogin.style.display = "block";
-                btnLogout.style.display = "none";
-            }
-            request_dvd({});
-        });
-    } catch (e) {
 
-    }
-    return false;
 }
 
 function request_dvd(params) {
@@ -191,11 +189,11 @@ function request_dvd(params) {
 }
 
 function prenotazione(value) {
-    overlay_prenotazione.show();
+    overlay.prenotazione().show();
 }
 
 btnLogin.onclick = () => {
-    overlay_login.show();
+    overlay.login().show();
 };
 
 btnLogout.onclick = () => {
@@ -218,17 +216,17 @@ window.onload = function () {
             let json = JSON.parse(result);
             // console.log(json);
             if (json.contenuto.genere)
-                json.contenuto.genere.forEach((genere) => addOption(liste.genere, genere));
+                json.contenuto.genere.forEach((genere) => addOptionToList(liste.genere, genere));
             if (json.contenuto.titoli)
-                json.contenuto.titoli.forEach((value) => addOption(liste.titoli, value));
+                json.contenuto.titoli.forEach((value) => addOptionToList(liste.titoli, value));
             if (json.contenuto.regia)
-                json.contenuto.regia.forEach((value) => addOption(liste.regista, value));
+                json.contenuto.regia.forEach((value) => addOptionToList(liste.regista, value));
             if (json.contenuto.anno)
-                json.contenuto.anno.forEach((value) => addOption(liste.anni, value));
+                json.contenuto.anno.forEach((value) => addOptionToList(liste.anni, value));
             if (json.contenuto.lingua_audio)
-                json.contenuto.lingua_audio.forEach((value) => addOption(liste.lingua_audio, value));
+                json.contenuto.lingua_audio.forEach((value) => addOptionToList(liste.lingua_audio, value));
             if (json.contenuto.lingua_sottotitoli)
-                json.contenuto.lingua_sottotitoli.forEach((value) => addOption(liste.lingua_sottotitoli, value));
+                json.contenuto.lingua_sottotitoli.forEach((value) => addOptionToList(liste.lingua_sottotitoli, value));
         },
         error: function (err) {
             console.error("Server non raggiungibile, oppure errore generico.");
