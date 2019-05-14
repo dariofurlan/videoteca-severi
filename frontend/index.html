@@ -26,34 +26,36 @@
                 <form id="login-form" method="post">
                     <div class="form-group">
                         <label>Username</label>
-                        <input id="login-username" type="text" name="username" class="form-control" placeholder="User Name">
+                        <input id="login-username" type="text" name="username" class="form-control"
+                               placeholder="User Name">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input id="login-password" type="password" name="password" class="form-control" placeholder="Password">
+                        <input id="login-password" type="password" name="password" class="form-control"
+                               placeholder="Password">
                     </div>
                     <input type="submit" value="Invio" class="btn btn-primary">
                 </form>
             </div>
             <div id="overlay_prenotazione">
                 <h3>Inserire i dati relativi all'utente richiedente la prenotazione</h2>
-                <div class="prenota-form">
-                    <form action="controlloprenotazione.php" method="POST">
-                        <div class="form-group">
-                            <label>Nome richiedente:</label>
-                            <input type="text" name="nome" class="form-control" placeholder="Nome">
-                        </div>
-                        <div class="form-group">
-                            <label>Cognome richiedente: </label>
-                            <input type="text" name="cognome" class="form-control" placeholder="Cognome">
-                        </div>
-                        <div class="form-group">
-                            <label>E-mail: </label>
-                            <input type="email" name="email" class="form-control" placeholder="Email">
-                        </div>
-                        <input type="submit" name="invio" value="invio" class="btn btn-primary">
-                    </form>
-                </div>
+                    <div class="prenota-form">
+                        <form id="prenotazione-form" method="POST">
+                            <div class="form-group">
+                                <label>Nome richiedente:</label>
+                                <input type="text" name="nome" class="form-control" placeholder="Nome">
+                            </div>
+                            <div class="form-group">
+                                <label>Cognome richiedente: </label>
+                                <input type="text" name="cognome" class="form-control" placeholder="Cognome">
+                            </div>
+                            <div class="form-group">
+                                <label>E-mail: </label>
+                                <input type="email" name="email" class="form-control" placeholder="Email">
+                            </div>
+                            <input type="submit" name="invio" value="invio" class="btn btn-primary">
+                        </form>
+                    </div>
             </div>
             <div id="overlay_schedafilm">
                 <h1>Scheda Film</h1>
@@ -63,21 +65,17 @@
 </div>
 
 <form onsubmit="return onformsubmit();">
-
     <div class="row riga" id="primaRiga">
-        <!-- Titolo -->
         <div class="col-lg-4">
             <input id="inputtitolo" list="listatitoli" value="" class="custom-select" placeholder="Titolo">
             <datalist id="listatitoli">
             </datalist>
         </div>
-        <!-- Genere -->
         <div class="col-lg-2">
             <input id="inputgenere" list="listagenere" value="" class="custom-select" placeholder="Genere">
             <datalist id="listagenere">
             </datalist>
         </div>
-        <!-- Disponibilità -->
         <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listadispobibilita">
                 <option value="" disabled selected hidden>Disponibilità</option>
@@ -86,7 +84,6 @@
                 <option value="">Qualsiasi</option>
             </select>
         </div>
-
         <div class="col-lg-1">
             <a id="reset">Reset</a>
         </div>
@@ -99,29 +96,21 @@
     </div>
 
     <div class="row riga hidden" id="secondaRiga">
-
-        <!-- Regista -->
         <div class="col-lg-4">
             <input id="inputregista" list="listaregista" value="" class="custom-select" placeholder="Regista">
             <datalist id="listaregista">
             </datalist>
         </div>
-
-        <!-- Anno -->
         <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listaanni">
                 <option value="" disabled selected hidden>Anno</option>
             </select>
         </div>
-
-        <!-- Lingua audio -->
         <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listaaudio">
                 <option value="" disabled selected hidden>Lingua Originale</option>
             </select>
         </div>
-
-        <!-- Rating -->
         <div class="col-lg-2">
             <select name="rating" class="form-control" id="rating">
                 <option value="" disabled selected hidden>Rating</option>
@@ -138,7 +127,6 @@
             </select>
         </div>
     </div>
-
 </form>
 
 <table class="table table-striped">

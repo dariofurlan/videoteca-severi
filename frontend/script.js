@@ -72,6 +72,17 @@ function Overlay() {
     };
 }
 
+function Tabella() {
+    this.tableBody = document.getElementById('table-body');
+    this.rows = [];
+
+    this.addRow = () => {
+        this.rows.push();
+
+        this.tableBody.appendChild();
+    };
+}
+
 const overlay = new Overlay();
 
 const liste = {
@@ -88,7 +99,6 @@ const datalists = {
     genere: document.getElementById("inputgenere"),
     regista: document.getElementById("inputregista"),
 };
-let count_rows = 1;
 let logged = false;
 
 function addOptionToList(lista, value) {
@@ -96,53 +106,6 @@ function addOptionToList(lista, value) {
     el.value = value;
     el.innerText = value;
     lista.appendChild(el);
-}
-
-function addRow(id, titolo, regista, genere, anno, lingua_originale, disponibilita) {
-    let row = document.createElement('tr');
-    let onclick = () => {
-        overlay.schedafilm(id).show();
-    };
-
-    function td(text = "") {
-        let td = document.createElement('td');
-        td.innerText = text;
-        td.onclick = onclick;
-        td.style.cursor = "pointer";
-        return td;
-    }
-
-    let N = document.createElement('th');
-    N.scope = "row";
-    N.innerText = id;
-    row.appendChild(N);
-    row.appendChild(td(titolo));
-    row.appendChild(td(regista));
-    row.appendChild(td(genere));
-    row.appendChild(td(anno));
-    row.appendChild(td(lingua_originale));
-    const disp = td(disponibilita);
-    disp.style.fontWeight = (disponibilita === "Si") ? "normal" : "bold";
-    row.appendChild(disp);
-
-    let btn_prenota = document.createElement("button");
-    btn_prenota.value = id;
-    btn_prenota.type = "button";
-    btn_prenota.innerText = "Prenota";
-    btn_prenota.disabled = (logged) ? (disponibilita !== "Si") : true;
-    btn_prenota.className = "btn btn-primary btn-prenota";
-    if (!logged)
-        btn_prenota.style.cursor = "not-allowed";
-    btn_prenota.onclick = () => {
-        overlay.prenotazione(btn_prenota.value).show();
-    };
-    let Prenota = td();
-    Prenota.onclick = null;
-    Prenota.style.cursor = "default";
-    Prenota.appendChild(btn_prenota);
-    row.appendChild(Prenota);
-
-    tableBody.appendChild(row);
 }
 
 function onclosevelo() {
@@ -158,11 +121,53 @@ function onformsubmit() {
     return false;
 }
 
-function onformlogin() {
-
-}
-
 function request_dvd() {
+    function addRow(id, titolo, regista, genere, anno, lingua_originale, disponibilita) {
+        let row = document.createElement('tr');
+        let onclick = () => {
+            overlay.schedafilm(id).show();
+        };
+
+        function td(text = "") {
+            let td = document.createElement('td');
+            td.innerText = text;
+            td.onclick = onclick;
+            td.style.cursor = "pointer";
+            return td;
+        }
+
+        let N = document.createElement('th');
+        N.scope = "row";
+        N.innerText = id;
+        row.appendChild(N);
+        row.appendChild(td(titolo));
+        row.appendChild(td(regista));
+        row.appendChild(td(genere));
+        row.appendChild(td(anno));
+        row.appendChild(td(lingua_originale));
+        const disp = td(disponibilita);
+        disp.style.fontWeight = (disponibilita === "Si") ? "normal" : "bold";
+        row.appendChild(disp);
+
+        let btn_prenota = document.createElement("button");
+        btn_prenota.value = id;
+        btn_prenota.type = "button";
+        btn_prenota.innerText = "Prenota";
+        btn_prenota.disabled = (logged) ? (disponibilita !== "Si") : true;
+        btn_prenota.className = "btn btn-primary btn-prenota";
+        if (!logged)
+            btn_prenota.style.cursor = "not-allowed";
+        btn_prenota.onclick = () => {
+            overlay.prenotazione(btn_prenota.value).show();
+        };
+        let Prenota = td();
+        Prenota.onclick = null;
+        Prenota.style.cursor = "default";
+        Prenota.appendChild(btn_prenota);
+        row.appendChild(Prenota);
+
+        tableBody.appendChild(row);
+    }
     tableBody.innerHTML = "";
     const params = {};
     Object.keys(liste).forEach(key => {
@@ -266,6 +271,5 @@ window.onload = function () {
             btnLogout.style.display = "none";
         }
         request_dvd({});
-        addRow();
     });
 };

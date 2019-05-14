@@ -44,38 +44,11 @@ class GuestResources extends Resources{
 
   static $dvd = [
       "required" => [],
-      "optional" => ["n_catalogo", "titolo", "regia", "genere", "anno", "lingua_audio", "lingua_sottotitoli", "disponibilita"]
+      "optional" => ["n_catalogo", "titolo", "regia", "genere", "anno", "lingua_audio", "disponibilita", "rating"]
   ];
 
   static $list = [
       "required" => [],
-      "optional" => ["genere", "regia", "anno", "lingua_audio", "lingua_sottotitoli"]
-  ];
-}
-
-class AdminResources extends Resources {
-  static $insert_dvd = [
-    "required" => [],
-    "optional" => []
-  ];
-
-  static $update_dvd = [
-    "required" => [],
-    "optional" => []
-  ];
-
-  static $delete_dvd = [
-    "required" => [],
-    "optional" => []
-  ];
-
-  static $insert_prenotazione =  [
-    "required" => [],
-    "optional" => []
-  ];
-
-  static $select_prenotazione =  [
-    "required" => [],
-    "optional" => []
+      "optional" => ["titolo","genere", "regia", "anno", "lingua"]
   ];
 }
