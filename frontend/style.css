@@ -17,7 +17,7 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(255,255,255,.5);
+    background-color: rgba(255,255,255,0.5);
     z-index: 2;
     text-align: center;
 }
@@ -28,21 +28,19 @@ body {
     left: 50%;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
+
     text-align: center;
+    padding: 20px;
+
     display: inline-block;
-    width: 80%;
-    height: 80%;
+    float:left;
     background-color: white;
     border: 1px solid black;
     border-radius: 10px;
 }
 
 #overlay_contenuto {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
+    display: block;
 }
 
 #overlay_login, #overlay_prenotazione, #overlay_schedafilm{
@@ -51,7 +49,7 @@ body {
 
 #close_overlay{
     font-size: 1.5em;
-    border: 0;
+    border: none;
     background-color: transparent;
     position: absolute;
     right: 0;
@@ -61,21 +59,11 @@ body {
 .table {
     border-radius: 5px;
     width: 80%;
-    margin: auto;
+    margin: 20px auto;
     float: none;
 }
 
-.riga {
-    margin: 10px auto;
-    max-width: 80%;
-    text-align: center;
-}
-
 #ricercaAvanzata, #reset {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-align: center;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -84,17 +72,26 @@ body {
     cursor: pointer;
 }
 
-#ricercaAvanzata:hover,#reset:hover {
+#ricercaAvanzata:hover, #reset:hover {
     text-decoration: underline;
 }
 
 #BottoneCerca {
-    display: inline-block;
-    width: 100%;
+    width: 60%;
 }
 
 th, td {
     text-align: center;
+}
+
+.riga {
+    margin: auto;
+    max-width: 80%;
+    text-align: center;
+}
+
+.btn-prenota {
+    z-index: 10;
 }
 
 #top-bar {
@@ -107,6 +104,7 @@ th, td {
     display: inline-block;
     color: #343a40;
     font-size: 5vmin;
+
     padding-bottom: 10px;
 }
 

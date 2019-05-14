@@ -3,17 +3,20 @@ const ricercaAvanzata = document.getElementById('ricercaAvanzata');
 const tableBody = document.getElementById('table-body');
 const btnLogin = document.getElementById('btnLogin');
 const btnLogout = document.getElementById('btnLogout');
+const btnReset = document.getElementById('reset');
 
 function Overlay() {
     this.velo = document.getElementById('velo');
     this.loaded = null;
 
-    this.prenotazione = () => {
+    this.prenotazione = (id) => {
+        console.log(id);
         this.loaded = document.getElementById('overlay_prenotazione');
         return this;
     };
 
-    this.schedafilm = () => {
+    this.schedafilm = (id) => {
+        console.log(id);
         this.loaded = document.getElementById('overlay_schedafilm');
         return this;
     };
@@ -28,7 +31,7 @@ function Overlay() {
                 let password = login_form[1].value;
                 $.ajax({
                     type: "POST",
-                    url: "../backend/admin_api.php/login",
+                    url: "http://10.0.1.252/biblioteca/biblio/backend/admin_api.php/login",
                     data: {username, password}
                 }).done((data) => {
                     let response = JSON.parse(data);
@@ -42,9 +45,12 @@ function Overlay() {
                     if (logged) {
                         btnLogin.style.display = "none";
                         btnLogout.style.display = "block";
+                        this.hide();
+                        request_dvd();
                     } else {
                         btnLogin.style.display = "block";
                         btnLogout.style.display = "none";
+                        alert("Login Errato!");
                     }
                 });
             } catch (e) {
@@ -52,8 +58,6 @@ function Overlay() {
             }
             return false;
         };
-        console.log(login_form);
-        console.log("A");
         return this;
     };
 
@@ -76,7 +80,6 @@ const liste = {
     regista: document.getElementById('listaregista'),
     anni: document.getElementById('listaanni'),
     lingua_audio: document.getElementById('listaaudio'),
-    lingua_sottotitoli: document.getElementById('listasottotitoli'),
     rating: document.getElementById('rating'),
     disponibilita: document.getElementById('listadispobibilita'),
 };
@@ -95,16 +98,17 @@ function addOptionToList(lista, value) {
     lista.appendChild(el);
 }
 
-function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotitoli, disponibilita) {
+function addRow(id, titolo, regista, genere, anno, lingua_originale, disponibilita) {
     let row = document.createElement('tr');
-    row.onclick = () => {
-        overlay.schedafilm().show();
+    let onclick = () => {
+        overlay.schedafilm(id).show();
     };
-    row.style.cursor = "pointer";
 
     function td(text = "") {
         let td = document.createElement('td');
         td.innerText = text;
+        td.onclick = onclick;
+        td.style.cursor = "pointer";
         return td;
     }
 
@@ -116,8 +120,7 @@ function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotit
     row.appendChild(td(regista));
     row.appendChild(td(genere));
     row.appendChild(td(anno));
-    row.appendChild(td(lingua_audio));
-    row.appendChild(td(lingua_sottotitoli));
+    row.appendChild(td(lingua_originale));
     const disp = td(disponibilita);
     disp.style.fontWeight = (disponibilita === "Si") ? "normal" : "bold";
     row.appendChild(disp);
@@ -127,13 +130,15 @@ function addRow(id, titolo, regista, genere, anno, lingua_audio, lingua_sottotit
     btn_prenota.type = "button";
     btn_prenota.innerText = "Prenota";
     btn_prenota.disabled = (logged) ? (disponibilita !== "Si") : true;
-    btn_prenota.className = "btn btn-primary";
+    btn_prenota.className = "btn btn-primary btn-prenota";
     if (!logged)
         btn_prenota.style.cursor = "not-allowed";
     btn_prenota.onclick = () => {
-        prenotazione(btn_prenota.value);
+        overlay.prenotazione(btn_prenota.value).show();
     };
     let Prenota = td();
+    Prenota.onclick = null;
+    Prenota.style.cursor = "default";
     Prenota.appendChild(btn_prenota);
     row.appendChild(Prenota);
 
@@ -146,21 +151,7 @@ function onclosevelo() {
 
 function onformsubmit() {
     try {
-        const params = {};
-        Object.keys(liste).forEach(key => {
-            let obj = liste[key];
-            let v;
-            if (obj.tagName === "SELECT") {
-                v = obj.value;
-            } else if (obj.tagName === "DATALIST") {
-                v = datalists[key].value;
-            } else {
-                return false;
-            }
-            if (v && v !== "")
-                params[key] = v;
-        });
-        console.log(params);
+        request_dvd(params);
     } catch (e) {
 
     }
@@ -171,15 +162,30 @@ function onformlogin() {
 
 }
 
-function request_dvd(params) {
+function request_dvd() {
+    tableBody.innerHTML = "";
+    const params = {};
+    Object.keys(liste).forEach(key => {
+        let obj = liste[key];
+        let v;
+        if (obj.tagName === "SELECT") {
+            v = obj.value;
+        } else if (obj.tagName === "DATALIST") {
+            v = datalists[key].value;
+        } else {
+            return false;
+        }
+        if (v && v !== "")
+            params[key] = v;
+    });
     $.ajax({
         url: "../backend/user_api.php/" + "dvd",
         data: params,
-        success: function (result, status, xhr) {
+        success: function (result) {
             let json = JSON.parse(result);
             console.log(json);
             json.contenuto.dvd.forEach(row => {
-                addRow(row.Catalogo, row.Titolo, row.Regia, row.Genere, row.Anno, row.Lingua_Originale, row.Sottotitoli, row.Disponibilita)
+                addRow(row.Inventario, row.Titolo, row.Regia, row.Nome_Genere, row.Anno, row.Lingua_Originale, row.Disponibilita)
             });
         },
         error: function () {
@@ -188,17 +194,30 @@ function request_dvd(params) {
     });
 }
 
-function prenotazione(value) {
-    overlay.prenotazione().show();
-}
+btnReset.onclick = () => {
+    Object.keys(liste).forEach(key => {
+        let obj = liste[key];
+        let v;
+        if (obj.tagName === "SELECT") {
+            obj.selectedIndex = 0;
+        } else if (obj.tagName === "DATALIST") {
+            datalists[key].value = "";
+        } else {
+            return false;
+        }
+    });
+};
 
 btnLogin.onclick = () => {
     overlay.login().show();
 };
 
 btnLogout.onclick = () => {
-    $.get("../backend/admin_api.php/logout", () => {
+    $.get("http://10.0.1.252/biblioteca/biblio/backend/admin_api.php/logout", () => {
         logged = false;
+        request_dvd();
+        btnLogin.style.display = "block";
+        btnLogout.style.display = "none";
     });
 };
 
@@ -208,13 +227,11 @@ ricercaAvanzata.onclick = () => {
 
 window.onload = function () {
     secondaRiga.style.display = 'none';
-
     $.ajax({
         url: "../backend/user_api.php/" + "list",
         data: {"titoli": 2, "genere": 1, "regia": 1, "anno": 1, "lingua_audio": 1, "lingua_sottotitoli": 1},
         success: function (result) {
             let json = JSON.parse(result);
-            // console.log(json);
             if (json.contenuto.genere)
                 json.contenuto.genere.forEach((genere) => addOptionToList(liste.genere, genere));
             if (json.contenuto.titoli)
@@ -225,8 +242,6 @@ window.onload = function () {
                 json.contenuto.anno.forEach((value) => addOptionToList(liste.anni, value));
             if (json.contenuto.lingua_audio)
                 json.contenuto.lingua_audio.forEach((value) => addOptionToList(liste.lingua_audio, value));
-            if (json.contenuto.lingua_sottotitoli)
-                json.contenuto.lingua_sottotitoli.forEach((value) => addOptionToList(liste.lingua_sottotitoli, value));
         },
         error: function (err) {
             console.error("Server non raggiungibile, oppure errore generico.");
@@ -251,10 +266,6 @@ window.onload = function () {
             btnLogout.style.display = "none";
         }
         request_dvd({});
+        addRow();
     });
 };
-
-
-for (let i = 0; i < 20; i++) {
-    addRow();
-}

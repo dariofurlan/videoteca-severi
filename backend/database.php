@@ -27,10 +27,10 @@ class Database {
                 $queries["img"] =  "SELECT "; // TODO
                 break;
             case "dvd":
-                $campi = "Catalogo, Titolo, Regia, Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita";
+                $campi = "Inventario, Titolo, Regia, GENERE.Nome_Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita";
                 if (count($params)===0)
                   $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
-                $joins = "";
+                $joins = "INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
                 $where = [];
                 foreach ($params as $key=>$value) {
                   switch ($key) {
@@ -42,7 +42,6 @@ class Database {
                         array_push($where, ucfirst($key)." = '$value'");
                         break;
                     case "genere":
-                        $joins.= " INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
                         array_push($where, "Nome_Genere = '$value'");
                         break;
                     case "lingua_audio":
@@ -70,9 +69,9 @@ class Database {
                 foreach($params as $key=>$value) {
                     switch ($key) {
 						//NON FUNZIONA, AAAAAAAAAAAAAAAAAAAAAA
-						case "titolo": 
+						case "titolo":
                         case "regia":
-                        case "anno": 
+                        case "anno":
 
                             $queries[$key] = "SELECT DISTINCT ".ucfirst($key)." FROM DVD";
                             break;
@@ -93,7 +92,7 @@ class Database {
                 $joins = "";
                 $where = "Titolo = '$params[titolo]'";
                 $queries["insert_prenotazione"].=" WHERE $where";
-				break; 
+				break;
         }
         switch ($resource) {
           case "img":

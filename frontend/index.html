@@ -36,7 +36,7 @@
                 </form>
             </div>
             <div id="overlay_prenotazione">
-                <h2>Inserire i dati relativi all'utente richiedente la prenotazione</h2>
+                <h3>Inserire i dati relativi all'utente richiedente la prenotazione</h2>
                 <div class="prenota-form">
                     <form action="controlloprenotazione.php" method="POST">
                         <div class="form-group">
@@ -51,7 +51,7 @@
                             <label>E-mail: </label>
                             <input type="email" name="email" class="form-control" placeholder="Email">
                         </div>
-                        <input type="submit" name="invio" value="invio" class="btn btn-black">
+                        <input type="submit" name="invio" value="invio" class="btn btn-primary">
                     </form>
                 </div>
             </div>
@@ -117,14 +117,7 @@
         <!-- Lingua audio -->
         <div class="col-lg-2">
             <select class="form-control d-inline-block" id="listaaudio">
-                <option value="" disabled selected hidden>Lingua Audio</option>
-            </select>
-        </div>
-
-        <!-- Lingua sottotitoli -->
-        <div class="col-lg-2">
-            <select class="form-control d-inline-block" id="listasottotitoli">
-                <option value="" disabled selected hidden>Lingua Sottotitoli</option>
+                <option value="" disabled selected hidden>Lingua Originale</option>
             </select>
         </div>
 
@@ -156,8 +149,7 @@
         <th scope="col">Regista</th>
         <th scope="col">Genere</th>
         <th scope="col">Anno</th>
-        <th scope="col">Lingua audio</th>
-        <th scope="col">Lingua sottotitoli</th>
+        <th scope="col">Lingua Originale</th>
         <th scope="col">Disponibilità</th>
         <th scope="col">Prenota</th>
     </tr>
