@@ -22,6 +22,18 @@ body {
     text-align: center;
 }
 
+#scheda-box{
+    display: block;
+    width: 300px;
+    height: 150px;
+    text-align: left;
+}
+
+.scheda-lista {
+    display: block;
+    text-align: left;
+}
+
 #overlay_box {
     position: absolute;
     top: 50%;

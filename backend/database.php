@@ -29,7 +29,7 @@ class Database {
                 $queries["img"] = "SELECT "; // TODO
                 break;
             case "dvd":
-                $campi = "Inventario, Titolo, Regia, GENERE.Nome_Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita, Rating";
+                $campi = "Inventario, Titolo, Regia, GENERE.Nome_Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita, Rating, Durata";
                 if (count($params) === 0) $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
                 $joins = "INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
                 $where = [];
@@ -37,6 +37,7 @@ class Database {
                     switch ($key) {
                         case "titolo":
                         case "regia":
+                            array_push($where, ucfirst($key) . " = '$value'"); // aggiungere *
                         case "anno":
                         case "tipo":
                             // caso "normale" nessun join
@@ -46,15 +47,13 @@ class Database {
                             array_push($where, "Nome_Genere = '$value'");
                             break;
                         case "lingua_originale":
-                            //TODO  correct the query
-                            //$joins.= "";
-                            //$where.= " = '$value'";
+                            array_push($where, "Nome_Lingua = '$value'");
                             break;
                         case "rating":
-                            array_push($where, "Rating >= '$value");
+                            array_push($where, "Rating >= '$value'");
                             break;
                         case "disponibilita":
-                            array_push($where, "Disponibilita = '$value");
+                            array_push($where, "Disponibilita = '$value'");
                             break;
                         case "lingua_sottotitoli":
                             $joins .= " INNER JOIN SOTTOTITOLATO_IN ON DVD.Inventario = SOTTOTITOLATO_IN.Inventario";
@@ -102,7 +101,7 @@ class Database {
             case "dvd":
                 $query = $queries["dvd"];
                 $r = $this->conn->query($query);
-                if (!$r) die("Errore query " . mysqli_error($this->conn));
+                if (!$r) die("Errore query (".$query.")" . mysqli_error($this->conn));
                 $aaa = $r->fetch_all(MYSQLI_ASSOC);
                 $result["dvd"] = $aaa;
                 break;

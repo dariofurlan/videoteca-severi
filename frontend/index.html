@@ -58,7 +58,13 @@
                     </div>
             </div>
             <div id="overlay_schedafilm">
-                <h1>Scheda Film</h1>
+                <h1 id="scheda-titolo"></h1>
+                <div id="scheda-box">
+                    <span class="scheda-lista">Durata: <span id="scheda-durata"></span></span>
+                    <span class="scheda-lista">Genere: <span id="scheda-genere"></span></span>
+                    <span class="scheda-lista">Anno Uscita: <span id="scheda-anno"></span></span>
+                    <span class="scheda-lista">Regista: <span id="scheda-regia"></span></span>
+                </div>
             </div>
         </div>
     </div>
@@ -77,7 +83,7 @@
             </datalist>
         </div>
         <div class="col-lg-2">
-            <select class="form-control d-inline-block" id="listadispobibilita">
+            <select class="form-control d-inline-block" id="listadisponibilita">
                 <option value="" disabled selected hidden>Disponibilità</option>
                 <option value="Si">Disponibile</option>
                 <option value="No">Non disponibile</option>
@@ -107,7 +113,7 @@
             </select>
         </div>
         <div class="col-lg-2">
-            <select class="form-control d-inline-block" id="listaaudio">
+            <select class="form-control d-inline-block" id="listalingua">
                 <option value="" disabled selected hidden>Lingua Originale</option>
             </select>
         </div>

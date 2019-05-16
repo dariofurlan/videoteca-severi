@@ -15,9 +15,14 @@ function Overlay() {
         return this;
     };
 
-    this.schedafilm = (id) => {
-        console.log(id);
+    this.schedafilm = (params) => {
+        console.log(params);
         this.loaded = document.getElementById('overlay_schedafilm');
+        document.getElementById('scheda-titolo').innerText = params.Titolo;
+        document.getElementById('scheda-durata').innerText = params.Durata;
+        document.getElementById('scheda-genere').innerText = params.Nome_Genere;
+        document.getElementById('scheda-anno').innerText = params.Anno;
+        document.getElementById('scheda-regia').innerText = params.Regia;
         return this;
     };
 
@@ -76,28 +81,75 @@ function Tabella() {
     this.tableBody = document.getElementById('table-body');
     this.rows = [];
 
-    this.addRow = () => {
-        this.rows.push();
+    this.addRow = (params) => {
+        let row = document.createElement('tr');
+        let onclick = () => {
+            overlay.schedafilm(params).show();
+        };
 
-        this.tableBody.appendChild();
+        function td(text = "") {
+            let td = document.createElement('td');
+            td.innerText = text;
+            td.onclick = onclick;
+            td.style.cursor = "pointer";
+            return td;
+        }
+
+        let Numero_Inventario = document.createElement('th');
+        Numero_Inventario.scope = "row";
+        Numero_Inventario.innerText = params.Inventario;
+        row.appendChild(Numero_Inventario);
+        row.appendChild(td(params.Titolo));
+        row.appendChild(td(params.Regia));
+        row.appendChild(td(params.Nome_Genere));
+        row.appendChild(td(params.Anno));
+        row.appendChild(td(params.Lingua_Originale));
+        const disp = td(params.Disponibilita);
+        disp.style.fontWeight = (params.Disponibilita === "Si") ? "normal" : "bold";
+        row.appendChild(disp);
+
+        let btn_prenota = document.createElement("button");
+        btn_prenota.value = params.Inventario;
+        btn_prenota.type = "button";
+        btn_prenota.innerText = "Prenota";
+        btn_prenota.disabled = (logged) ? (params.Disponibilita !== "Si") : true;
+        btn_prenota.className = "btn btn-primary btn-prenota";
+        if (!logged)
+            btn_prenota.style.cursor = "not-allowed";
+        btn_prenota.onclick = () => {
+            overlay.prenotazione(btn_prenota.value).show();
+        };
+        let Prenota = td();
+        Prenota.onclick = null;
+        Prenota.style.cursor = "default";
+        Prenota.appendChild(btn_prenota);
+        row.appendChild(Prenota);
+
+        this.tableBody.appendChild(row);
+        this.rows.push(row);
+    };
+
+    this.clear = () => {
+        this.innerHTML = "";
     };
 }
 
 const overlay = new Overlay();
+const tabella = new Tabella();
 
 const liste = {
+    titolo: document.getElementById('listatitoli'),
     genere: document.getElementById('listagenere'),
-    titoli: document.getElementById('listatitoli'),
-    regista: document.getElementById('listaregista'),
-    anni: document.getElementById('listaanni'),
-    lingua_audio: document.getElementById('listaaudio'),
+    regia: document.getElementById('listaregista'),
+    anno: document.getElementById('listaanni'),
+    lingua_originale: document.getElementById('listalingua'),
     rating: document.getElementById('rating'),
-    disponibilita: document.getElementById('listadispobibilita'),
+    disponibilita: document.getElementById('listadisponibilita'),
 };
 const datalists = {
-    titoli: document.getElementById("inputtitolo"),
+    titolo: document.getElementById("inputtitolo"),
     genere: document.getElementById("inputgenere"),
-    regista: document.getElementById("inputregista"),
+    regia: document.getElementById("inputregista"),
 };
 let logged = false;
 
@@ -114,7 +166,7 @@ function onclosevelo() {
 
 function onformsubmit() {
     try {
-        request_dvd(params);
+        request_dvd();
     } catch (e) {
 
     }
@@ -122,53 +174,6 @@ function onformsubmit() {
 }
 
 function request_dvd() {
-    function addRow(id, titolo, regista, genere, anno, lingua_originale, disponibilita) {
-        let row = document.createElement('tr');
-        let onclick = () => {
-            overlay.schedafilm(id).show();
-        };
-
-        function td(text = "") {
-            let td = document.createElement('td');
-            td.innerText = text;
-            td.onclick = onclick;
-            td.style.cursor = "pointer";
-            return td;
-        }
-
-        let N = document.createElement('th');
-        N.scope = "row";
-        N.innerText = id;
-        row.appendChild(N);
-        row.appendChild(td(titolo));
-        row.appendChild(td(regista));
-        row.appendChild(td(genere));
-        row.appendChild(td(anno));
-        row.appendChild(td(lingua_originale));
-        const disp = td(disponibilita);
-        disp.style.fontWeight = (disponibilita === "Si") ? "normal" : "bold";
-        row.appendChild(disp);
-
-        let btn_prenota = document.createElement("button");
-        btn_prenota.value = id;
-        btn_prenota.type = "button";
-        btn_prenota.innerText = "Prenota";
-        btn_prenota.disabled = (logged) ? (disponibilita !== "Si") : true;
-        btn_prenota.className = "btn btn-primary btn-prenota";
-        if (!logged)
-            btn_prenota.style.cursor = "not-allowed";
-        btn_prenota.onclick = () => {
-            overlay.prenotazione(btn_prenota.value).show();
-        };
-        let Prenota = td();
-        Prenota.onclick = null;
-        Prenota.style.cursor = "default";
-        Prenota.appendChild(btn_prenota);
-        row.appendChild(Prenota);
-
-        tableBody.appendChild(row);
-    }
-    tableBody.innerHTML = "";
     const params = {};
     Object.keys(liste).forEach(key => {
         let obj = liste[key];
@@ -183,14 +188,16 @@ function request_dvd() {
         if (v && v !== "")
             params[key] = v;
     });
+    console.log(params);
     $.ajax({
         url: "../backend/user_api.php/" + "dvd",
         data: params,
         success: function (result) {
+            console.log(result);
             let json = JSON.parse(result);
             console.log(json);
             json.contenuto.dvd.forEach(row => {
-                addRow(row.Inventario, row.Titolo, row.Regia, row.Nome_Genere, row.Anno, row.Lingua_Originale, row.Disponibilita)
+                tabella.addRow(row);
             });
         },
         error: function () {
@@ -198,6 +205,8 @@ function request_dvd() {
         }
     });
 }
+
+tabella.addRow({Inventario:"1",Titolo:"Ciao",Regia:"Approva",Nome_Genere:"Roberto",Anno:"2001",Lingua_Originale:"1",Disponibilita:"11"});
 
 btnReset.onclick = () => {
     Object.keys(liste).forEach(key => {
@@ -234,19 +243,20 @@ window.onload = function () {
     secondaRiga.style.display = 'none';
     $.ajax({
         url: "../backend/user_api.php/" + "list",
-        data: {"titoli": 2, "genere": 1, "regia": 1, "anno": 1, "lingua_audio": 1, "lingua_sottotitoli": 1},
+        data: {"titolo": 1, "genere": 1, "regia": 1, "anno": 1, "lingua": 1},
         success: function (result) {
             let json = JSON.parse(result);
+            console.log(json);
             if (json.contenuto.genere)
                 json.contenuto.genere.forEach((genere) => addOptionToList(liste.genere, genere));
-            if (json.contenuto.titoli)
-                json.contenuto.titoli.forEach((value) => addOptionToList(liste.titoli, value));
+            if (json.contenuto.titolo)
+                json.contenuto.titolo.forEach((value) => addOptionToList(liste.titolo, value));
             if (json.contenuto.regia)
-                json.contenuto.regia.forEach((value) => addOptionToList(liste.regista, value));
+                json.contenuto.regia.forEach((value) => addOptionToList(liste.regia, value));
             if (json.contenuto.anno)
-                json.contenuto.anno.forEach((value) => addOptionToList(liste.anni, value));
-            if (json.contenuto.lingua_audio)
-                json.contenuto.lingua_audio.forEach((value) => addOptionToList(liste.lingua_audio, value));
+                json.contenuto.anno.forEach((value) => addOptionToList(liste.anno, value));
+            if (json.contenuto.lingua)
+                json.contenuto.lingua.forEach((value) => addOptionToList(liste.lingua_originale, value));
         },
         error: function (err) {
             console.error("Server non raggiungibile, oppure errore generico.");
