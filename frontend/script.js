@@ -23,6 +23,14 @@ function Overlay() {
         document.getElementById('scheda-genere').innerText = params.Nome_Genere;
         document.getElementById('scheda-anno').innerText = params.Anno;
         document.getElementById('scheda-regia').innerText = params.Regia;
+        let rating = "";
+        for (let n=0;n<params.Rating;n++) {
+            rating += "★";
+        }
+        for (let n=rating.length;n<10;n++) {
+            rating += "☆";
+        }
+        document.getElementById('scheda-rating').innerHTML = rating +" "+ params.Rating+"/10";
         return this;
     };
 
@@ -206,7 +214,7 @@ function request_dvd() {
     });
 }
 
-tabella.addRow({Inventario:"1",Titolo:"Ciao",Regia:"Approva",Nome_Genere:"Roberto",Anno:"2001",Lingua_Originale:"1",Disponibilita:"11"});
+tabella.addRow({Inventario:"1",Titolo:"Ciao",Regia:"Approva",Nome_Genere:"Roberto",Anno:"2001",Lingua_Originale:"1",Disponibilita:"11",Rating:4});
 
 btnReset.onclick = () => {
     Object.keys(liste).forEach(key => {

@@ -32,6 +32,7 @@ body {
 .scheda-lista {
     display: block;
     text-align: left;
+    margin: 10px 0;
 }
 
 #overlay_box {
