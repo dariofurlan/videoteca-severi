@@ -12,3 +12,5 @@
   * [Unità di Apprendimento](doc/UDA_5ID.pdf)
   * [GANTT](doc/GANTTVideoteca.pdf)
   * [Analisi Rischi](doc/AnalisiRischiVideoteca.pdf)
+  * [WBS](doc/WBS.pdf)
+  * [CPM](doc/CPM.png)
