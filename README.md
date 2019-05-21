@@ -4,8 +4,8 @@
   * [Documentazione API](doc/Backend-User-API.md)
 
 * ### [Database](database/)
-  * [Lista Query](database/QueryProgetto.txt)
-  * [Schema ER](database/Schema%20ER.png)
+  * [Lista Query](database/Query_Progetto.txt)
+  * [Schema ER](database/Schema_ER.png)
 
 * ### [Documentazione](doc/)
   * [Lista dei gruppi](doc/GRUPPI.md)
