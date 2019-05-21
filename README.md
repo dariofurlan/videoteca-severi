@@ -10,4 +10,5 @@
 * ### [Documentazione](doc/)
   * [Lista dei gruppi](doc/GRUPPI.md)
   * [Unità di Apprendimento](doc/UDA_5ID.pdf)
-  * [GANTT](doc/GANTT.pdf)
+  * [GANTT](doc/GANTTVideoteca.pdf)
+  * [Analisi Rischi](doc/AnalisiRischiVideoteca.pdf)
