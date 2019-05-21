@@ -5,7 +5,7 @@
 
 * ### [Database](database/)
   * [Lista Query](database/QueryProgetto.txt)
-  * [Schema ER](database/Schema%20ER%20(Bozza).png)
+  * [Schema ER](database/Schema%20ER.png)
 
 * ### [Documentazione](doc/)
   * [Lista dei gruppi](doc/GRUPPI.md)
