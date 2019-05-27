@@ -23,7 +23,7 @@
         <button id="close_overlay" onclick="onclosevelo();">⨯</button>
         <div id="overlay_contenuto">
             <div id="overlay_login">
-                <form id="login-form" method="post">
+                <form id="login-form" method="POST">
                     <div class="form-group">
                         <label>Username</label>
                         <input id="login-username" type="text" name="username" class="form-control"
@@ -53,7 +53,7 @@
                                 <label>E-mail: </label>
                                 <input type="email" name="email" class="form-control" placeholder="Email">
                             </div>
-                            <input type="submit" name="invio" value="invio" class="btn btn-primary">
+                            <input type="submit" value="invio" class="btn btn-primary">
                         </form>
                     </div>
             </div>
@@ -65,6 +65,8 @@
                     <span class="scheda-lista">Anno Uscita: <span id="scheda-anno"></span></span>
                     <span class="scheda-lista">Regista: <span id="scheda-regia"></span></span>
                     <span class="scheda-lista">Rating: <span id="scheda-rating"></span></span>
+                    <span class="scheda-lista">Sinossi: <span id="scheda-sinossi"></span></span>
+                    <span class="scheda-lista">Occasioni: <span id="scheda-occasioni"></span></span>
                 </div>
             </div>
         </div>

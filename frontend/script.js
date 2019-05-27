@@ -12,6 +12,42 @@ function Overlay() {
     this.prenotazione = (id) => {
         console.log(id);
         this.loaded = document.getElementById('overlay_prenotazione');
+
+        const prenotazione_form = document.getElementById('prenotazione-form');
+        console.log(prenotazione_form);
+        prenotazione_form.onsubmit = () => {
+            try {
+                let nome = prenotazione_form[0].value;
+                let cognome = prenotazione_form[1].value;
+                let email = prenotazione_form[2].value;
+                let ok = false;
+                $.ajax({
+                    type: "POST",
+                    url: "./backend/admin_api.php/prenotazione",
+                    data: {"idfilm":id,nome, cognome, email}
+                }).done((data) => {
+                    console.log(data);
+                    let response = JSON.parse(data);
+                    if (response.ok && response.ok === "true") {
+                        ok = true;
+                        console.info("Ok!");
+                    }
+                }).fail((errore) => {
+                    console.log(errore);
+                }).always(() => {
+                    if (ok) {
+                        this.hide();
+                        request_dvd();
+                    } else {
+                        alert("Login Errato!");
+                    }
+                });
+            } catch (e) {
+
+            }
+            return false;
+        };
+
         return this;
     };
 
@@ -23,11 +59,14 @@ function Overlay() {
         document.getElementById('scheda-genere').innerText = params.Nome_Genere;
         document.getElementById('scheda-anno').innerText = params.Anno;
         document.getElementById('scheda-regia').innerText = params.Regia;
+        document.getElementById('scheda-sinossi').innerText = params.Sinossi;
+        document.getElementById('scheda-occasioni').innerText = params.Occasioni;
+        let rat = Math.round(parseFloat(params.Rating));
         let rating = "";
-        for (let n=0;n<params.Rating;n++) {
+        for (let n = 0; n < rat; n++) {
             rating += "★";
         }
-        for (let n=rating.length;n<10;n++) {
+        for (let n = rat; n < 10; n++) {
             rating += "☆";
         }
         document.getElementById('scheda-rating').innerHTML = rating +" "+ params.Rating+"/10";
@@ -44,7 +83,7 @@ function Overlay() {
                 let password = login_form[1].value;
                 $.ajax({
                     type: "POST",
-                    url: "http://10.0.1.252/biblioteca/biblio/backend/admin_api.php/login",
+                    url: "./backend/admin_api.php/login",
                     data: {username, password}
                 }).done((data) => {
                     let response = JSON.parse(data);
@@ -119,14 +158,25 @@ function Tabella() {
         let btn_prenota = document.createElement("button");
         btn_prenota.value = params.Inventario;
         btn_prenota.type = "button";
-        btn_prenota.innerText = "Prenota";
-        btn_prenota.disabled = (logged) ? (params.Disponibilita !== "Si") : true;
-        btn_prenota.className = "btn btn-primary btn-prenota";
-        if (!logged)
+        if (params.Disponibilita === "Si") {
+          btn_prenota.innerText = "Prenotare";
+          btn_prenota.className = "btn btn-primary btn-prenota";
+          btn_prenota.onclick = () => {
+              overlay.prenotazione(btn_prenota.value).show();
+          };
+        } else {
+          btn_prenota.innerText = "Restituire";
+          btn_prenota.className = "btn btn-primary btn-success";
+          btn_prenota.onclick = () => {
+              restituzione(btn_prenota.value);
+          };
+        }
+        if (!logged) {
+            btn_prenota.disabled = true;
             btn_prenota.style.cursor = "not-allowed";
-        btn_prenota.onclick = () => {
-            overlay.prenotazione(btn_prenota.value).show();
-        };
+        }
+
+
         let Prenota = td();
         Prenota.onclick = null;
         Prenota.style.cursor = "default";
@@ -138,7 +188,8 @@ function Tabella() {
     };
 
     this.clear = () => {
-        this.innerHTML = "";
+        this.tableBody.innerHTML = "";
+        this.rows = [];
     };
 }
 
@@ -160,6 +211,28 @@ const datalists = {
     regia: document.getElementById("inputregista"),
 };
 let logged = false;
+
+function restituzione(idfilm) {
+    let ok = false;
+    $.ajax({
+        type: "POST",
+        url: "./backend/admin_api.php/restituzione",
+        data: {idfilm},
+        success: function (data) {
+            console.log(data);
+            let response = JSON.parse(data);
+            if (response.ok && response.ok === "true") {
+                ok = true;
+                console.info("restituzione ok!");
+            }
+        },
+        error: function () {
+            console.error("Errore restituzione dvd");
+        }
+    }).always(() => {
+        request_dvd();
+    });
+}
 
 function addOptionToList(lista, value) {
     let el = document.createElement('option');
@@ -197,13 +270,12 @@ function request_dvd() {
             params[key] = v;
     });
     console.log(params);
+    tabella.clear();
     $.ajax({
-        url: "../backend/user_api.php/" + "dvd",
+        url: "./backend/user_api.php/" + "dvd",
         data: params,
         success: function (result) {
-            console.log(result);
             let json = JSON.parse(result);
-            console.log(json);
             json.contenuto.dvd.forEach(row => {
                 tabella.addRow(row);
             });
@@ -213,8 +285,6 @@ function request_dvd() {
         }
     });
 }
-
-tabella.addRow({Inventario:"1",Titolo:"Ciao",Regia:"Approva",Nome_Genere:"Roberto",Anno:"2001",Lingua_Originale:"1",Disponibilita:"11",Rating:4});
 
 btnReset.onclick = () => {
     Object.keys(liste).forEach(key => {
@@ -235,7 +305,7 @@ btnLogin.onclick = () => {
 };
 
 btnLogout.onclick = () => {
-    $.get("http://10.0.1.252/biblioteca/biblio/backend/admin_api.php/logout", () => {
+    $.get("./backend/admin_api.php/logout", () => {
         logged = false;
         request_dvd();
         btnLogin.style.display = "block";
@@ -250,7 +320,7 @@ ricercaAvanzata.onclick = () => {
 window.onload = function () {
     secondaRiga.style.display = 'none';
     $.ajax({
-        url: "../backend/user_api.php/" + "list",
+        url: "./backend/user_api.php/" + "list",
         data: {"titolo": 1, "genere": 1, "regia": 1, "anno": 1, "lingua": 1},
         success: function (result) {
             let json = JSON.parse(result);
@@ -271,7 +341,7 @@ window.onload = function () {
         }
     });
 
-    $.get("../backend/admin_api.php/is_logged", (data) => {
+    $.get("./backend/admin_api.php/is_logged", (data) => {
         let response = JSON.parse(data);
         if (response.logged)
             if (response.logged === "true") {

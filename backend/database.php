@@ -29,7 +29,7 @@ class Database {
                 $queries["img"] = "SELECT "; // TODO
                 break;
             case "dvd":
-                $campi = "Inventario, Titolo, Regia, GENERE.Nome_Genere, Anno, Lingua_Originale, Sottotitoli, Disponibilita, Rating, Durata";
+                $campi = "Inventario, Titolo, Regia, GENERE.Nome_Genere, Anno,Lingua_Originale, Sottotitoli, Disponibilita, Rating, Durata, Sinossi, Occasioni, Cover, Link_Trailer, Link_IMDB_altro";
                 if (count($params) === 0) $queries["dvd"] = "SELECT $campi FROM DVD ORDER BY(Titolo)";
                 $joins = "INNER JOIN GENERE ON DVD.Genere = GENERE.Id_Genere";
                 $where = [];
@@ -47,7 +47,7 @@ class Database {
                             array_push($where, "Nome_Genere = '$value'");
                             break;
                         case "lingua_originale":
-                            array_push($where, "Nome_Lingua = '$value'");
+                            array_push($where, "Lingua_Originale = '$value'");
                             break;
                         case "rating":
                             array_push($where, "Rating >= '$value'");
@@ -75,13 +75,13 @@ class Database {
                         case "titolo":
                         case "regia":
                         case "anno":
-                            $queries[$key] = "SELECT DISTINCT " . ucfirst($key) . " FROM DVD";
+                            $queries[$key] = "SELECT DISTINCT " . ucfirst($key) . " FROM DVD ORDER BY(". ucfirst($key).")";
                             break;
                         case 'genere':
-                            $queries[$key] = "SELECT DISTINCT Nome_Genere FROM GENERE";
+                            $queries[$key] = "SELECT DISTINCT Nome_Genere FROM GENERE ORDER BY(Nome_Genere)";
                             break;
                         case 'lingua':
-                            $queries[$key] = "SELECT DISTINCT Nome_Lingua FROM LINGUE";
+                            $queries[$key] = "SELECT DISTINCT Nome_Lingua FROM LINGUE ORDER BY(Nome_Lingua)";
                             break;
                     }
                 }

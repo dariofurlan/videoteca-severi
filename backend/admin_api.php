@@ -17,13 +17,80 @@ try {
         is_logged();
         $res->ok("",["logged"=>"false"]);
     } elseif ($path === "prenotazione") {
-
+		    prenota();
+    } elseif ($path === "restituzione") {
+        restituzione();
     } else {
       throw new Exception("Percorso non valido.");
     }
 
 } catch (Exception $e) {
     $res->error(400, $e);
+}
+
+function prenota() {
+	global $res;
+	require_once 'vars.php';
+
+  if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
+      $res->errore(400, "Manca username");
+  }
+
+	$conn = new mysqli(HOST, USER, PASSWORD, DB);
+	$idFilm = $_POST["idfilm"];
+	$dataInizio = time();
+	$nome = $_POST["nome"];
+	$cognome = $_POST["cognome"];
+	$email = $_POST["email"];
+	$conn->autocommit(FALSE);
+
+	$sql = "SELECT * FROM DVD WHERE Inventario=$idFilm AND Disponibilita='Si'";
+	$result = $conn->query($sql);
+	$num_rows = $result->num_rows;
+	if ($num_rows == 0) {
+		$conn->rollback();
+    $res->error(400,"Dvd non più disponibile");
+	}
+
+	$sql = "UPDATE DVD SET Disponibilita='No' WHERE Inventario=$idFilm";
+	$result = $conn->query($sql);
+
+	if (!$result) {
+		$conn->rollback();
+		$res->error(500, "Errore prenotazione(UPDATE)");
+	}
+
+	$sql = "INSERT INTO NOLEGGIO VALUES($idFilm,'$email','" . date('Y-m-d') . "','" . date('Y-m-d', strtotime("+30 days")) . "', '$nome', '$cognome')";
+	$result = $conn->query($sql);
+
+	if (!$result) {
+		$conn->rollback();
+    $res->error(500, "Errore prenotazione(INSERT)");
+	}
+
+	$conn->commit();
+  $res->ok("",["ok"=>"true"]);
+}
+
+function restituzione() {
+    global $res;
+    require_once 'vars.php';
+
+    if (!isset($_SESSION["username"]) || empty($_SESSION["username"])) {
+        $res->errore(400, "Manca username");
+    }
+
+  	$conn = new mysqli(HOST, USER, PASSWORD, DB);
+  	$idFilm = $_POST["idfilm"];
+
+  	$sql = "UPDATE DVD SET Disponibilita='Si' WHERE Inventario=$idFilm";
+  	$result = $conn->query($sql);
+
+  	if (!$result) {
+  		  $res->error(500, "Errore restituzione (UPDATE)");
+  	}
+
+    $res->ok("",["ok"=>"true"]);
 }
 
 function is_logged() {
@@ -37,7 +104,6 @@ function log_in() {
     global $res;
     require_once 'vars.php';
     $conn = new mysqli(HOST, USER, PASSWORD, DB);
-//    require_once 'conn.php';
 
     if (!isset($_POST["username"]) || empty($_POST["username"])) {
         $res->error(400,"Manca username");
